@@ -31,8 +31,8 @@ async function init() {
 	document.body.appendChild(app.canvas);
 
 	// Manifest example
-
-
+	// Assets.init must only happen once! 
+	// Pack all your bundles into one manifest!
 	await Assets.init({ manifest: manifestExample });
 
 	// Bundles can be loaded in the background too!
@@ -44,10 +44,20 @@ async function init() {
 async function makeLoadScreen() {
 	// Get the assets from the load screen bundle.
 	// If the bundle was already downloaded the promise resolves instantly!
-	const loadScreenAssets = await Assets.loadBundle('load-screen');
+	//We can load a single bundle, or an array
+	const loadScreenAssets = await Assets.loadBundle(['load-screen', 'game-screen']);
 
 	// Create a new Sprite from the resolved loaded texture
-	const goNext = new Sprite(loadScreenAssets.flowerTop);
+	const goNext = new Sprite(loadScreenAssets['load-screen'].flowerTop);
+
+	//Data> If I want to load assets without a manifest:
+	const texture1 = await Assets.load('clampy.png');
+	const clampy = Sprite.from(texture1);
+	clampy.anchor.set(1)
+	clampy.x = app.screen.width;
+	clampy.y = app.screen.height;
+	app.stage.addChild(clampy)
+	//END Data.
 
 	goNext.anchor.set(0.5);
 	goNext.x = app.screen.width / 2;
