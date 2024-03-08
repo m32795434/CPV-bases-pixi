@@ -1,3 +1,4 @@
+// ------------------------------ START Previous app
 // const app = new Application<HTMLCanvasElement>({
 // 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 // 	resolution: window.devicePixelRatio || 1,
@@ -14,41 +15,23 @@
 // clampy.y = app.screen.height / 2;
 
 // app.stage.addChild(clampy);
+// ------------------------------ END Previous app
+
 import { Application, Assets, Sprite } from 'pixi.js';
+import manifestExample from '../static/manifests/manifestExample';
 
 // Create a new application
 const app = new Application();
 
 async function init() {
 	// Initialize the application
-	await app.init({ background: '#1099bb', resizeTo: window });
+	await app.init({ background: '#1099bb', width: 500, height: 500 });
 
 	// Append the application canvas to the document body
 	document.body.appendChild(app.canvas);
 
 	// Manifest example
-	const manifestExample = {
-		bundles: [
-			{
-				name: 'load-screen',
-				assets: [
-					{
-						alias: 'flowerTop',
-						src: 'https://pixijs.com/assets/flowerTop.png',
-					},
-				],
-			},
-			{
-				name: 'game-screen',
-				assets: [
-					{
-						alias: 'eggHead',
-						src: 'https://pixijs.com/assets/eggHead.png',
-					},
-				],
-			},
-		],
-	};
+
 
 	await Assets.init({ manifest: manifestExample });
 
@@ -70,11 +53,18 @@ async function makeLoadScreen() {
 	goNext.x = app.screen.width / 2;
 	goNext.y = app.screen.height / 2;
 	app.stage.addChild(goNext);
+	// let elapsed = 0.0;
 
+	// app.ticker.add((ticker: any) => {
+	// 	elapsed += ticker.deltaTime;
+	// 	goNext.x = 100.0 + Math.cos(elapsed / 50.0) * 100.0;
+	// });
 	goNext.eventMode = 'static';
 	goNext.cursor = 'pointer';
 
+
 	goNext.on('pointertap', async () => {
+		// app.ticker.stop();
 		goNext.destroy();
 		makeGameScreen();
 	});
