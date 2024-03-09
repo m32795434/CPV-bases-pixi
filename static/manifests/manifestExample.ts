@@ -7,6 +7,10 @@ const manifestExample = {
                     alias: 'flowerTop',
                     src: 'https://pixijs.com/assets/flowerTop.png',
                 },
+                {
+                    alias: 'hat',
+                    src: '../hat.svg',
+                },
             ],
         },
         {
