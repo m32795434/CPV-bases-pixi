@@ -23,9 +23,11 @@ import manifestExample from '../static/manifests/manifestExample';
 // Create a new application
 const app = new Application();
 
+
+
 async function init() {
 	// Initialize the application
-	await app.init({ background: '#1099bb', width: 500, height: 500 });
+	await app.init({ background: '#1099bb', width: 1000, height: 1000 });
 
 	// Append the application canvas to the document body
 	document.body.appendChild(app.canvas);
@@ -39,6 +41,20 @@ async function init() {
 	Assets.backgroundLoadBundle(['load-screen', 'game-screen']);
 
 	makeLoadScreen();
+
+	window.addEventListener('resize', () => {
+		const scaleX = window.innerWidth / app.screen.width;
+		const scaleY = window.innerHeight / app.screen.height
+		const scale = Math.min(scaleX, scaleY)
+
+		const screenWidth = Math.round(app.screen.width * scale)
+		const screenHeight = Math.round(app.screen.height * scale)
+
+		app.canvas.style.width = screenWidth + "px"
+		app.canvas.style.height = screenHeight + "px"
+		console.log("app.screen.width: ", app.screen.width, "\n app.canvas.style.width: ", app.canvas.style.width)
+	})
+	window.dispatchEvent(new Event('resize'))
 }
 
 async function makeLoadScreen() {
