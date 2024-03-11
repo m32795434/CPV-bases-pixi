@@ -1,6 +1,6 @@
-import { Application, Assets, Sprite, Graphics } from 'pixi.js';
+import { Application, Assets, Sprite } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
-import { flowerWithHat } from './models/flower-with-hat';
+import { Scene } from './Scene';
 
 // Create a new application
 const app = new Application();
@@ -35,20 +35,17 @@ async function init() {
 
 async function makeLoadScreen() {
 
-    // const texture1 = await Assets.load("./clampy.png")
+    //const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
+    const scene = new Scene();
+    app.stage.addChild(scene)
 
-    const flowerToptWithHat: flowerWithHat = new flowerWithHat();
-    //all contanier's properties, FIRST
-    // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
-    flowerToptWithHat.position.set(200, 200)
+    //I can't do this anymore
+    // const contStroke = new Graphics()
+    //     .rect(scene.x, scene.y, scene.width, scene.height)
+    //     .stroke(0x0000ff)
+    // app.stage.addChild(contStroke)
 
-
-    app.stage.addChild(flowerToptWithHat)
-    const contStroke = new Graphics()
-        .rect(flowerToptWithHat.x, flowerToptWithHat.y, flowerToptWithHat.width, flowerToptWithHat.height)
-        .stroke(0x0000ff)
-    app.stage.addChild(contStroke)
     // let elapsed = 0.0;
     // app.ticker.add((ticker: any) => {
     // 	elapsed += ticker.deltaTime;

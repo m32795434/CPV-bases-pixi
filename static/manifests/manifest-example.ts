@@ -22,6 +22,27 @@ const manifestExample = {
                 },
             ],
         },
+        {
+            name: 'gangnam',
+            assets: [
+                {
+                    alias: 'G1',
+                    src: '../G1.png',
+                },
+                {
+                    alias: 'G2',
+                    src: '../G2.png',
+                },
+                {
+                    alias: 'G3',
+                    src: '../G3.png',
+                },
+                {
+                    alias: 'G4',
+                    src: '../G4.png',
+                },
+            ]
+        }
     ],
 };
 export default manifestExample;

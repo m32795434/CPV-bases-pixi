@@ -1,12 +1,11 @@
 import { Assets, Container, Graphics, Sprite } from "pixi.js";
 import { makeGameScreen } from "..";
 
-export class flowerWithHat extends Container {
+export class FlowerWithHat extends Container {
     constructor() {
         super();
         (async () => {
             const loadScreenAssets = await Assets.loadBundle(['load-screen', 'game-screen']);
-            console.log(loadScreenAssets)
             if (loadScreenAssets) {
 
                 const flowerTop = new Sprite(loadScreenAssets['load-screen'].flowerTop);//119*181
