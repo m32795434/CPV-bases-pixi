@@ -1,4 +1,4 @@
-import { Assets, Container, Text } from "pixi.js";
+import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
 import { FlowerWithHat } from "./models/Flower-with-hat";
 import { AniGangnam } from "./models/AniGangnam";
 import { Triangle } from "./models/Triangle";
@@ -29,7 +29,27 @@ export class Scene extends Container {
             })
             title.position.set(600 - title.width, 40)
             title.angle = -5;
-            this.addChild(flowerToptWithHat, aniGangnam, triangle4, title)
+
+            const boardTexture = await Assets.load('board.png')
+            const nineSliceBoard = new NineSliceSprite({
+                texture: boardTexture,
+                leftWidth: 1,
+                rightWidth: 50,
+                bottomHeight: 35,
+                topHeight: 35
+            });
+
+            nineSliceBoard.width = 500
+            nineSliceBoard.height = 200
+            nineSliceBoard.scale.set(1.1)
+            // nineSliceBoard.angle = 90;
+            nineSliceBoard.position.set(50, 250)
+            // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
+            // nineSliceBoard.pivot.set(1, 1)
+            // const boardRect = new Graphics()
+            //     .rect(nineSliceBoard.x, nineSliceBoard.y, nineSliceBoard.width, nineSliceBoard.height)
+            //     .stroke(0x900000)
+            this.addChild(nineSliceBoard, flowerToptWithHat, aniGangnam, triangle4, title,)
 
             // const aniGangStroke = new Graphics()
             //     .rect(aniGangnam.x, aniGangnam.y, aniGangnam.width, aniGangnam.height)
