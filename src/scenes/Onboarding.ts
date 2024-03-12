@@ -2,6 +2,7 @@ import { Assets, Container, HTMLText, NineSliceSprite, Text } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
+import { UI } from "../models/UI";
 
 export class Onboarding extends Container {
     constructor() {
@@ -79,6 +80,10 @@ export class Onboarding extends Container {
             //     .rect(aniGangnam.x, aniGangnam.y, aniGangnam.width, aniGangnam.height)
             //     .stroke(0x0000ff)
             // this.addChild(aniGangStroke)
+
+            const stoneGame = new UI();
+            stoneGame.position.set(200, 200)
+            this.addChild(stoneGame)
         })()
 
 

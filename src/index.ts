@@ -14,7 +14,7 @@ async function init() {
     await Assets.init({ manifest: manifestExample });
 
     // Bundles can be loaded in the background too!
-    Assets.backgroundLoadBundle(['load-screen', 'game-screen']);
+    Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui']);
 
     makeLoadScreen();
 
