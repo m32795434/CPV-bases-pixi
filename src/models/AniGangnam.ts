@@ -6,14 +6,19 @@ export class AniGangnam extends Container {
         (async () => {
             const gangnamBundle = await Assets.loadBundle('gangnam')
             console.log("gangnamBundle", gangnamBundle)
-            const gangmanAnimated: AnimatedSprite = new AnimatedSprite([
+            const aniGangman: AnimatedSprite = new AnimatedSprite([
                 gangnamBundle.G1,
                 gangnamBundle.G2,
                 gangnamBundle.G3,
                 gangnamBundle.G4], true)
-            gangmanAnimated.animationSpeed = 0.1;
-            gangmanAnimated.play();
-            this.addChild(gangmanAnimated)
+            aniGangman.animationSpeed = 0.1;
+            aniGangman.play();
+
+            // const aniGangStroke = new Graphics()
+            //     .rect(this.x, this.y, this.width, this.height)
+            //     .stroke(0x0000ff)
+
+            this.addChild(aniGangman)
         })()
 
     }
