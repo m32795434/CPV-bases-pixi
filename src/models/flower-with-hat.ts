@@ -28,7 +28,8 @@ export class FlowerWithHat extends Container {
                     .rect(hat.x, hat.y, hat.width, hat.height)
                     .stroke(0x0000ff);
                 this.addChild(hatStroke)
-                flowerTop.interactive = true;
+
+                // flowerTop.interactive = true;
                 flowerTop.eventMode = 'static';
                 flowerTop.cursor = 'pointer';
 

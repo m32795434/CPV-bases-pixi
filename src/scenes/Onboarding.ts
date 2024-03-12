@@ -1,4 +1,4 @@
-import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
+import { Assets, Container, HTMLText, NineSliceSprite, Text } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
@@ -12,7 +12,8 @@ export class Onboarding extends Container {
             const flowerToptWithHat: FlowerWithHat = new FlowerWithHat();
             //all contanier's properties, FIRST
             // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
-            flowerToptWithHat.position.set(200, 200)
+            flowerToptWithHat.scale.set(0.5)
+            flowerToptWithHat.position.set(50, 450)
             const aniGangnam: AniGangnam = new AniGangnam();
             aniGangnam.scale.set(.2)
 
@@ -20,15 +21,26 @@ export class Onboarding extends Container {
             triangle4.position.set(0, 125)
             triangle4.scale.set(.3)
 
-            const title: Text = new Text({
-                text: "ONBOARDING",
+            const title: HTMLText = new HTMLText({
+                text: '¡<red>ONBOARDING</red>!',
                 style: {
-                    fontFamily: "Roboto-Italic",
+                    fontFamily: 'ShortStack-Regular',
+                    fill: 'white',
                     fontSize: 50,
-                    fill: 0x900000
+                    tagStyles: {
+                        red: {
+                            fill: 'red',
+                        },
+                        blue: {
+                            fill: 'blue',
+                        },
+                        green: {
+                            fill: 'green',
+                        }
+                    }
                 }
-            })
-            title.position.set(100, 50)
+            });
+            title.position.set(100, 20)
 
 
             const version: Text = new Text({
@@ -53,9 +65,9 @@ export class Onboarding extends Container {
 
             nineSliceBoard.width = 500
             nineSliceBoard.height = 300
-            nineSliceBoard.scale.set(1.1)
+            nineSliceBoard.scale.set(.5)
             // nineSliceBoard.angle = 90;
-            nineSliceBoard.position.set(10, 200)
+            nineSliceBoard.position.set(10, 450)
             // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
             // nineSliceBoard.pivot.set(1, 1)
             // const boardRect = new Graphics()

@@ -33,10 +33,10 @@ async function init() {
 }
 
 async function makeLoadScreen() {
-
     // const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
     const scene = new Onboarding();
+    console.log("scene", scene)
     scene.label = "Onboarding"
     app.stage.addChild(scene)
 
@@ -45,7 +45,8 @@ async function makeLoadScreen() {
     //     .rect(scene.x, scene.y, scene.width, scene.height)
     //     .stroke(0x0000ff)
     // app.stage.addChild(contStroke)
-
+    app.renderer.render(app.stage)
+    console.log("makeloadscreen stage childs: ", app.stage.children)
 }
 
 export async function makeGameScreen() {
@@ -59,7 +60,6 @@ export async function makeGameScreen() {
     goBack.y = app.screen.height / 2;
     goBack.label = "goBack"
     app.stage.addChild(goBack);
-    app.renderer.render(app.stage);
 
     goBack.eventMode = 'static';
     goBack.cursor = 'pointer';
@@ -69,6 +69,7 @@ export async function makeGameScreen() {
         // The user can go back and the files are already downloaded
         makeLoadScreen();
     });
+    app.renderer.render(app.stage);
 }
 
 init();
