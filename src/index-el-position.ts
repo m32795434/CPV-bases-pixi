@@ -86,7 +86,6 @@ async function makeLoadScreen() {
     // flowerTopStroke.position.copyFrom(aux);
     console.log("aux1 = new Point(600, 600)\n", aux1)
 
-    // graphics.setStrokeStyle({ width: 1, color: 0xff0000, alignment: 1, alpha: 1 }); // Grosor y color del contorno
     // graphics.rect((goNext.x - goNext.width / 2), (goNext.y - goNext.height / 2), goNext.width, goNext.height);
     // graphics.fill(0x0000ff);
     flowerToptWithHat.addChild(flowerTopStroke)

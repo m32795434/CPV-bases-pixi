@@ -89,7 +89,6 @@ async function makeLoadScreen() {
 	const goNextStroke = new Graphics()
 		.rect((goNext.x - goNext.width / 2), (goNext.y - goNext.height / 2), goNext.width, goNext.height)
 		.stroke(0x0000ff)
-	// graphics.setStrokeStyle({ width: 1, color: 0xff0000, alignment: 1, alpha: 1 }); // Grosor y color del contorno
 	// graphics.rect((goNext.x - goNext.width / 2), (goNext.y - goNext.height / 2), goNext.width, goNext.height);
 	// graphics.fill(0x0000ff);
 	app.stage.addChild(goNextStroke);

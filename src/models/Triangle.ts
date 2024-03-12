@@ -4,7 +4,6 @@ export class Triangle extends Container {
     constructor() {
         super();
         const triangle = new Graphics();
-        // triangle.setStrokeStyle({ color: 0xFF00FF, width: 10, alpha: 1 })
         triangle.moveTo(0, 0);
         triangle.lineTo(200, 0)
         triangle.lineTo(0, 200)
