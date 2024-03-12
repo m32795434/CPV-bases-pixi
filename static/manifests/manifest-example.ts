@@ -11,20 +11,6 @@ const manifestExample = {
                     alias: 'hat',
                     src: '../hat.svg',
                 },
-            ],
-        },
-        {
-            name: 'game-screen',
-            assets: [
-                {
-                    alias: 'eggHead',
-                    src: 'https://pixijs.com/assets/eggHead.png',
-                },
-            ],
-        },
-        {
-            name: 'gangnam',
-            assets: [
                 {
                     alias: 'G1',
                     src: '../G1.png',
@@ -41,7 +27,16 @@ const manifestExample = {
                     alias: 'G4',
                     src: '../G4.png',
                 },
-            ]
+            ],
+        },
+        {
+            name: 'game-screen',
+            assets: [
+                {
+                    alias: 'eggHead',
+                    src: 'https://pixijs.com/assets/eggHead.png',
+                },
+            ],
         }
     ],
 };

@@ -1,10 +1,9 @@
 import { Application, Assets, Sprite } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
-import { Scene } from './Scene';
+import { Onboarding } from './scenes/Onboarding';
 
 // Create a new application
-const app = new Application();
-
+export const app = new Application();
 async function init() {
     // Initialize the application
     await app.init({ background: '#1099bb', width: 600, height: 600 });
@@ -35,9 +34,10 @@ async function init() {
 
 async function makeLoadScreen() {
 
-    //const texture1 = await Assets.load("./clampy.png")
+    // const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
-    const scene = new Scene();
+    const scene = new Onboarding();
+    scene.label = "Onboarding"
     app.stage.addChild(scene)
 
     //I can't do this anymore
@@ -46,23 +46,20 @@ async function makeLoadScreen() {
     //     .stroke(0x0000ff)
     // app.stage.addChild(contStroke)
 
-    // let elapsed = 0.0;
-    // app.ticker.add((ticker: any) => {
-    // 	elapsed += ticker.deltaTime;
-    // 	goNext.x = 100.0 + Math.cos(elapsed / 50.0) * 100.0;
-    // });
 }
 
 export async function makeGameScreen() {
+    // app.stage.removeChildren()
     const loadScreenAssets = await Assets.loadBundle('game-screen');
 
     // Create a new Sprite from the resolved loaded texture
     const goBack = new Sprite(loadScreenAssets.eggHead);
-
     goBack.anchor.set(0.5);
     goBack.x = app.screen.width / 2;
     goBack.y = app.screen.height / 2;
+    goBack.label = "goBack"
     app.stage.addChild(goBack);
+    app.renderer.render(app.stage);
 
     goBack.eventMode = 'static';
     goBack.cursor = 'pointer';

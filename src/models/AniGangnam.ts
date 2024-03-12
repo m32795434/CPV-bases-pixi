@@ -4,7 +4,7 @@ export class AniGangnam extends Container {
     constructor() {
         super();
         (async () => {
-            const gangnamBundle = await Assets.loadBundle('gangnam')
+            const gangnamBundle = await Assets.loadBundle('load-screen')
             console.log("gangnamBundle", gangnamBundle)
             const aniGangman: AnimatedSprite = new AnimatedSprite([
                 gangnamBundle.G1,

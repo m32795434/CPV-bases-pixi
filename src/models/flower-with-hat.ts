@@ -1,5 +1,5 @@
 import { Assets, Container, Graphics, Sprite } from "pixi.js";
-import { makeGameScreen } from "..";
+import { app, makeGameScreen } from "..";
 
 export class FlowerWithHat extends Container {
     constructor() {
@@ -11,10 +11,6 @@ export class FlowerWithHat extends Container {
                 const flowerTop = new Sprite(loadScreenAssets['load-screen'].flowerTop);//119*181
                 const hat = new Sprite(loadScreenAssets['load-screen'].hat);//47*28
 
-                // flowerTop.anchor.set(0.5);
-                // flowerTop.x = app.screen.width / 2;
-                // flowerTop.y = app.screen.height / 2;
-                //we have .rotation, .angle, .scale too, and more!
                 this.addChild(flowerTop)
 
                 const flowerTopStroke = new Graphics()
@@ -23,9 +19,6 @@ export class FlowerWithHat extends Container {
 
                 this.addChild(flowerTopStroke)
 
-                // hat.anchor.set(0.5);
-                // hat.scale.set(0.5, 0.5);
-                //Position, from its parent
                 hat.position.x = flowerTop.x - flowerTop.width / 2;
                 hat.position.y = flowerTop.y - flowerTop.height / 2;
                 this.addChild(hat)
@@ -35,15 +28,24 @@ export class FlowerWithHat extends Container {
                     .rect(hat.x, hat.y, hat.width, hat.height)
                     .stroke(0x0000ff);
                 this.addChild(hatStroke)
-
+                flowerTop.interactive = true;
                 flowerTop.eventMode = 'static';
                 flowerTop.cursor = 'pointer';
 
+                let elapsed = 0.0;
 
                 flowerTop.on('pointertap', async () => {
-                    // app.ticker.stop();
-                    flowerTop.destroy();
-                    makeGameScreen();
+                    app.ticker.add((ticker: any) => {
+                        elapsed += ticker.deltaTime;
+                        if (elapsed < 100) {
+                            flowerTop.x = 100.0 + Math.cos(elapsed / 10.0) * 100.0;
+                        } else {
+                            const index = app.stage.children.findIndex((el) => el.label === 'Onboarding')
+                            app.stage.removeChild(app.stage.children[index])
+                            app.ticker.stop();
+                            makeGameScreen();
+                        }
+                    });
                 });
             }
 
@@ -51,4 +53,5 @@ export class FlowerWithHat extends Container {
 
 
     }
+    // removeScene = false;
 }

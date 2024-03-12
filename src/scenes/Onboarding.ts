@@ -1,13 +1,14 @@
 import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
-import { FlowerWithHat } from "./models/Flower-with-hat";
-import { AniGangnam } from "./models/AniGangnam";
-import { Triangle } from "./models/Triangle";
+import { FlowerWithHat } from "../models/Flower-with-hat";
+import { AniGangnam } from "../models/AniGangnam";
+import { Triangle } from "../models/Triangle";
 
-export class Scene extends Container {
+export class Onboarding extends Container {
     constructor() {
         super();
         (async () => {
             await Assets.load('ShortStack-Regular.ttf')
+            await Assets.load('Roboto-Italic.ttf')
             const flowerToptWithHat: FlowerWithHat = new FlowerWithHat();
             //all contanier's properties, FIRST
             // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
@@ -20,36 +21,47 @@ export class Scene extends Container {
             triangle4.scale.set(.3)
 
             const title: Text = new Text({
-                text: "¡Hello v8!🚀",
+                text: "ONBOARDING",
                 style: {
-                    fontFamily: "short-stack",
+                    fontFamily: "Roboto-Italic",
+                    fontSize: 50,
+                    fill: 0x900000
+                }
+            })
+            title.position.set(100, 50)
+
+
+            const version: Text = new Text({
+                text: "¡V8🚀!",
+                style: {
+                    fontFamily: "ShortStack-Regular",
                     fontSize: 40,
                     fill: 0x900000
                 }
             })
-            title.position.set(600 - title.width, 40)
-            title.angle = -5;
+            version.position.set(600 - version.width - 5, 600 - version.height - 10)
+            version.angle = -5;
 
             const boardTexture = await Assets.load('board.png')
             const nineSliceBoard = new NineSliceSprite({
                 texture: boardTexture,
-                leftWidth: 1,
+                leftWidth: 50,
                 rightWidth: 50,
                 bottomHeight: 35,
                 topHeight: 35
             });
 
             nineSliceBoard.width = 500
-            nineSliceBoard.height = 200
+            nineSliceBoard.height = 300
             nineSliceBoard.scale.set(1.1)
             // nineSliceBoard.angle = 90;
-            nineSliceBoard.position.set(50, 250)
+            nineSliceBoard.position.set(10, 200)
             // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
             // nineSliceBoard.pivot.set(1, 1)
             // const boardRect = new Graphics()
             //     .rect(nineSliceBoard.x, nineSliceBoard.y, nineSliceBoard.width, nineSliceBoard.height)
             //     .stroke(0x900000)
-            this.addChild(nineSliceBoard, flowerToptWithHat, aniGangnam, triangle4, title,)
+            this.addChild(title, nineSliceBoard, flowerToptWithHat, aniGangnam, triangle4, version,)
 
             // const aniGangStroke = new Graphics()
             //     .rect(aniGangnam.x, aniGangnam.y, aniGangnam.width, aniGangnam.height)
