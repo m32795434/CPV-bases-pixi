@@ -2,15 +2,18 @@ import { Container, Sprite, Texture } from "pixi.js";
 
 export class Button extends Container {
 
-    private selected: Texture = new Texture;
-    private notSelected: Texture = new Texture;
-    private changeTexture = false;
-    private btn: any;
+    selected: Texture = new Texture;
+    notSelected: Texture = new Texture;
+    changeTexture = false;
+    btn: any;
+    checked = false
+    callb: any
+    id: any
 
-    constructor(selected: Texture, notSelected: Texture, width: number, height: number) {
+    constructor(selected: Texture, notSelected: Texture, width: number, height: number, callb: any, id: any) {
         super();
-
-
+        this.callb = callb
+        this.id = id;
         this.selected = selected;
         this.notSelected = notSelected;
 
@@ -27,7 +30,9 @@ export class Button extends Container {
     mouseupHandler() {
         // console.log("uiBundle::", this.uiBundle)
         this.changeTexture = !this.changeTexture
+        this.checked = !this.checked
         this.btn.texture = this.selected
+        this.callb(this.id)
     }
     mouseoverHandler() {
         this.btn.texture = this.selected
@@ -38,5 +43,7 @@ export class Button extends Container {
     touchendHandler() {
         this.btn.texture = this.changeTexture ? this.notSelected : this.selected
         this.changeTexture = !this.changeTexture
+        this.checked = !this.checked
+        this.callb(this.id)
     }
 }
