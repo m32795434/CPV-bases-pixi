@@ -17,13 +17,14 @@ export class Button extends Container {
         this.btn = Sprite.from(this.notSelected)
         this.btn.position.set(width, height)
         this.btn.interactive = true;
-        this.btn.on("pointerup", this.pointerupHandler, this)
+        this.btn.on("mouseup", this.mouseupHandler, this)
+        this.btn.on("touchend", this.touchendHandler, this)
         this.btn.on("mouseover", this.mouseoverHandler, this)
         this.btn.on("mouseout", this.mouseoutHandler, this)
 
         this.addChild(this.btn)
     }
-    pointerupHandler() {
+    mouseupHandler() {
         // console.log("uiBundle::", this.uiBundle)
         this.changeTexture = !this.changeTexture
         this.btn.texture = this.selected
@@ -33,5 +34,9 @@ export class Button extends Container {
     }
     mouseoutHandler() {
         if (!this.changeTexture) this.btn.texture = this.notSelected
+    }
+    touchendHandler() {
+        this.btn.texture = this.changeTexture ? this.notSelected : this.selected
+        this.changeTexture = !this.changeTexture
     }
 }
