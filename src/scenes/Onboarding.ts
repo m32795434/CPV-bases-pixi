@@ -2,7 +2,7 @@ import { Assets, Container, HTMLText, NineSliceSprite, Text } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
-import { UI } from "../models/UI";
+import { StonePaperGame } from "../models/StonePaperGame";
 
 export class Onboarding extends Container {
     constructor() {
@@ -71,19 +71,13 @@ export class Onboarding extends Container {
             nineSliceBoard.position.set(10, 450)
             // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
             // nineSliceBoard.pivot.set(1, 1)
-            // const boardRect = new Graphics()
-            //     .rect(nineSliceBoard.x, nineSliceBoard.y, nineSliceBoard.width, nineSliceBoard.height)
-            //     .stroke(0x900000)
+
             this.addChild(title, nineSliceBoard, flowerToptWithHat, aniGangnam, triangle4, version,)
 
-            // const aniGangStroke = new Graphics()
-            //     .rect(aniGangnam.x, aniGangnam.y, aniGangnam.width, aniGangnam.height)
-            //     .stroke(0x0000ff)
-            // this.addChild(aniGangStroke)
+            const stonePaperGame = new StonePaperGame();
+            stonePaperGame.position.set(150, 100)
 
-            const stoneGame = new UI();
-            stoneGame.position.set(200, 200)
-            this.addChild(stoneGame)
+            this.addChild(stonePaperGame)
         })()
 
 
