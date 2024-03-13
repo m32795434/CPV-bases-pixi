@@ -1,4 +1,4 @@
-import { Assets, Container, HTMLText, Text } from "pixi.js";
+import { Assets, Container, Text } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
@@ -10,7 +10,7 @@ export class Onboarding extends Container {
     constructor() {
         super();
         (async () => {
-            await Assets.load('ShortStack-Regular.ttf')
+            await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
             const flowerToptWithHat: FlowerWithHat = new FlowerWithHat();
             //all contanier's properties, FIRST
@@ -24,32 +24,17 @@ export class Onboarding extends Container {
             triangle4.position.set(0, 125)
             triangle4.scale.set(.3)
 
-            const title: HTMLText = new HTMLText({
-                text: '¡<red>ONBOARDING</red>!',
-                style: {
-                    fontFamily: 'ShortStack-Regular',
-                    fill: 'white',
-                    fontSize: 50,
-                    tagStyles: {
-                        red: {
-                            fill: 'red',
-                        },
-                        blue: {
-                            fill: 'blue',
-                        },
-                        green: {
-                            fill: 'green',
-                        }
-                    }
-                }
-            });
+            const title = new Text({
+                text: '¡ONBOARDING!',
+                style: { fontFamily: 'ShortStack Regular' }
+            })
             title.position.set(100, 20)
 
 
             const version: Text = new Text({
                 text: "¡V8🚀!",
                 style: {
-                    fontFamily: "ShortStack-Regular",
+                    fontFamily: "ShortStack Regular",
                     fontSize: 40,
                     fill: 0x900000
                 }
@@ -98,3 +83,23 @@ export class Onboarding extends Container {
 // nineSliceBoard.position.set(10, 450)
 // // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
 // // nineSliceBoard.pivot.set(1, 1)
+
+// const title: HTMLText = new HTMLText({
+//     text: '¡<red>ONBOARDING</red>!',
+//     style: {
+//         fontFamily: 'ShortStack Regular',
+//         fill: 'white',
+//         fontSize: 50,
+//         tagStyles: {
+//             red: {
+//                 fill: 'red',
+//             },
+//             blue: {
+//                 fill: 'blue',
+//             },
+//             green: {
+//                 fill: 'green',
+//             }
+//         }
+//     }
+// });

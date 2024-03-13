@@ -1,10 +1,11 @@
-import { Assets, Container, HTMLText, NineSliceSprite } from "pixi.js";
+import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
 import { Button } from "./Button";
 
 export class StonePaperGame extends Container {
     private uiBundle: any;
     private handArray: Button[] = [];
-    private dialog: HTMLText = new HTMLText;
+    private dialog: Text = new Text;
+
     constructor() {
         super();
         (async () => {
@@ -36,27 +37,14 @@ export class StonePaperGame extends Container {
                 this.handArray.push(stone, paper, scissor)
                 this.addChild(background, stone, paper, scissor)
 
+                await Assets.load('ComicNeue Bold.ttf');
 
-
-                this.dialog = new HTMLText({
-                    text: `<red>Selected...</red>`,
+                this.dialog = new Text({
+                    text: 'Selected...',
                     style: {
-                        fontFamily: 'ShortStack-Regular',
-                        fill: 'white',
-                        fontSize: 40,
-                        tagStyles: {
-                            red: {
-                                fill: 'red',
-                            },
-                            blue: {
-                                fill: 'blue',
-                            },
-                            green: {
-                                fill: 'green',
-                            }
-                        }
+                        fontFamily: 'ComicNeue Bold'
                     }
-                });
+                })
                 this.dialog.anchor.set(.5)
                 this.dialog.position.set(background.width / 2, 200)
 
@@ -69,7 +57,7 @@ export class StonePaperGame extends Container {
     }
     onkeydown(e: KeyboardEvent): void {
         console.log("key: ", e.code)
-        this.dialog.text = `<red>${e.code}</red>`
+        this.dialog.text = e.code
     }
     changeChecked(name: any) {
         this.handArray.forEach((el: any) => {
@@ -77,7 +65,7 @@ export class StonePaperGame extends Container {
                 el.uncheck();
             }
         })
-        this.dialog.text = `<red>${name}</red>`;
+        this.dialog.text = name
         console.log("\nname: ", name)
         //app.renderer.render(app.stage)
     }
