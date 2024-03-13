@@ -4,6 +4,7 @@ import { Button } from "./Button";
 export class StonePaperGame extends Container {
     private uiBundle: any;
     private handArray: Button[] = [];
+    private dialog: HTMLText = new HTMLText;
     constructor() {
         super();
         (async () => {
@@ -37,8 +38,8 @@ export class StonePaperGame extends Container {
 
 
 
-                const selected: HTMLText = new HTMLText({
-                    text: '<red>Selected...</red>',
+                this.dialog = new HTMLText({
+                    text: `<red>Selected...</red>`,
                     style: {
                         fontFamily: 'ShortStack-Regular',
                         fill: 'white',
@@ -56,21 +57,28 @@ export class StonePaperGame extends Container {
                         }
                     }
                 });
-                selected.anchor.set(.5)
-                selected.position.set(background.width / 2, 200)
+                this.dialog.anchor.set(.5)
+                this.dialog.position.set(background.width / 2, 200)
 
-                this.addChild(selected)
+                this.addChild(this.dialog)
 
+                document.addEventListener('keydown', this.onkeydown.bind(this))
 
             }
         })()
     }
+    onkeydown(e: KeyboardEvent): void {
+        console.log("key: ", e.code)
+        this.dialog.text = `<red>${e.code}</red>`
+    }
     changeChecked(name: any) {
         this.handArray.forEach((el: any) => {
-            if (el.id !== name)
+            if (el.id !== name) {
                 el.uncheck();
-            console.log("el: ", el, "\nname: ", name)
+            }
         })
-        // app.renderer.render(app.stage)
+        this.dialog.text = `<red>${name}</red>`;
+        console.log("\nname: ", name)
+        //app.renderer.render(app.stage)
     }
 }
