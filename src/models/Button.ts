@@ -24,14 +24,19 @@ export class Button extends Container {
         this.btn.on("touchend", this.touchendHandler, this)
         this.btn.on("mouseover", this.mouseoverHandler, this)
         this.btn.on("mouseout", this.mouseoutHandler, this)
-
         this.addChild(this.btn)
     }
+    uncheck() {
+        if (this.checked) {
+            this.checked = false
+            this.changeTexture = false
+            this.btn.texture = this.notSelected
+        }
+    }
     mouseupHandler() {
-        // console.log("uiBundle::", this.uiBundle)
         this.changeTexture = !this.changeTexture
         this.checked = !this.checked
-        this.btn.texture = this.selected
+        this.btn.texture = this.checked ? this.selected : this.notSelected
         this.callb(this.id)
     }
     mouseoverHandler() {
@@ -41,9 +46,8 @@ export class Button extends Container {
         if (!this.changeTexture) this.btn.texture = this.notSelected
     }
     touchendHandler() {
-        this.btn.texture = this.changeTexture ? this.notSelected : this.selected
-        this.changeTexture = !this.changeTexture
         this.checked = !this.checked
+        this.btn.texture = this.checked ? this.selected : this.notSelected
         this.callb(this.id)
     }
 }

@@ -1,5 +1,6 @@
 import { Assets, Container, HTMLText, NineSliceSprite } from "pixi.js";
 import { Button } from "./Button";
+import { app } from "..";
 
 export class StonePaperGame extends Container {
     private uiBundle: any;
@@ -26,7 +27,6 @@ export class StonePaperGame extends Container {
                 const stone = new Button(
                     await Assets.load('./UI/hand_yellow_closed.png'),
                     await Assets.load('./UI/green_hand_closed.png'), 10, 15, this.changeChecked.bind(this), "stone")
-
                 const paper = new Button(
                     await Assets.load('./UI/hand_yellow_open.png'),
                     await Assets.load('./UI/green_hand_open.png'), background.width / 3 + 10, 10, this.changeChecked.bind(this), "paper")
@@ -69,9 +69,9 @@ export class StonePaperGame extends Container {
     changeChecked(name: any) {
         this.handArray.forEach((el: any) => {
             if (el.id !== name)
-                el.checked = false;
+                el.uncheck();
             console.log("el: ", el, "\nname: ", name)
         })
-        // app.renderer.render(app.stage)
+        app.renderer.render(app.stage)
     }
 }
