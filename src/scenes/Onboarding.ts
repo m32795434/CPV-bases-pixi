@@ -1,8 +1,9 @@
-import { Assets, Container, HTMLText, NineSliceSprite, Text } from "pixi.js";
+import { Assets, Container, HTMLText, Text } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
 import { StonePaperGame } from "../models/StonePaperGame";
+import { AniSpace } from "../models/AniSpace";
 
 export class Onboarding extends Container {
     constructor() {
@@ -14,7 +15,7 @@ export class Onboarding extends Container {
             //all contanier's properties, FIRST
             // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
             flowerToptWithHat.scale.set(0.5)
-            flowerToptWithHat.position.set(50, 450)
+            flowerToptWithHat.position.set(250, 500)
             const aniGangnam: AniGangnam = new AniGangnam();
             aniGangnam.scale.set(.2)
 
@@ -55,24 +56,12 @@ export class Onboarding extends Container {
             version.position.set(600 - version.width - 5, 600 - version.height - 10)
             version.angle = -5;
 
-            const boardTexture = await Assets.load('board.png')
-            const nineSliceBoard = new NineSliceSprite({
-                texture: boardTexture,
-                leftWidth: 50,
-                rightWidth: 50,
-                bottomHeight: 35,
-                topHeight: 35
-            });
 
-            nineSliceBoard.width = 500
-            nineSliceBoard.height = 300
-            nineSliceBoard.scale.set(.5)
-            // nineSliceBoard.angle = 90;
-            nineSliceBoard.position.set(10, 450)
-            // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
-            // nineSliceBoard.pivot.set(1, 1)
+            const ship = new AniSpace();
+            ship.position.set(10, 450)
+            ship.scale.set(.7)
 
-            this.addChild(title, nineSliceBoard, flowerToptWithHat, aniGangnam, triangle4, version,)
+            this.addChild(ship, title, flowerToptWithHat, aniGangnam, triangle4, version,)
 
             const stonePaperGame = new StonePaperGame();
             stonePaperGame.position.set(150, 100)
@@ -83,3 +72,22 @@ export class Onboarding extends Container {
 
     }
 }
+
+// NineSliceSprite
+
+// const boardTexture = await Assets.load('board.png')
+// const nineSliceBoard = new NineSliceSprite({
+//     texture: boardTexture,
+//     leftWidth: 50,
+//     rightWidth: 50,
+//     bottomHeight: 35,
+//     topHeight: 35
+// });
+
+// nineSliceBoard.width = 500
+// nineSliceBoard.height = 300
+// nineSliceBoard.scale.set(.5)
+// // nineSliceBoard.angle = 90;
+// nineSliceBoard.position.set(10, 450)
+// // nineSliceBoard.skew.set(Math.PI * 0.1, Math.PI * 0.05)
+// // nineSliceBoard.pivot.set(1, 1)

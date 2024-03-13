@@ -12,6 +12,10 @@ const manifestExample = {
                     src: '../hat.svg',
                 },
                 {
+                    alias: 'diving_helmet',
+                    src: '../space/diving-helmet.png',
+                },
+                {
                     alias: 'G1',
                     src: '../G1.png',
                 },
@@ -83,6 +87,35 @@ const manifestExample = {
                 },
             ],
         },
+        {
+            name: 'space_ship',
+            assets: [
+                {
+                    alias: 'spaceShips_004',
+                    src: '../space/spaceShips_004.png'
+                },
+                {
+                    alias: 'spaceShips_003',
+                    src: '../space/spaceShips_003.png'
+                },
+                {
+                    alias: 'spaceShips_002',
+                    src: '../space/spaceShips_002.png'
+                },
+                {
+                    alias: 'spaceShips_007',
+                    src: '../space/spaceShips_007.png'
+                },
+                {
+                    alias: 'spaceShips_008',
+                    src: '../space/spaceShips_008.png'
+                },
+                {
+                    alias: 'spaceShips_006',
+                    src: '../space/spaceShips_006.png'
+                }
+            ]
+        }
     ],
 };
 export default manifestExample;

@@ -9,7 +9,7 @@ export class FlowerWithHat extends Container {
             if (loadScreenAssets) {
 
                 const flowerTop = new Sprite(loadScreenAssets['load-screen'].flowerTop);//119*181
-                const hat = new Sprite(loadScreenAssets['load-screen'].hat);//47*28
+                const hat = new Sprite(loadScreenAssets['load-screen'].diving_helmet);
 
                 this.addChild(flowerTop)
 
@@ -18,9 +18,9 @@ export class FlowerWithHat extends Container {
                     .stroke(0x0000ff)
 
                 this.addChild(flowerTopStroke)
-
-                hat.position.x = flowerTop.x - flowerTop.width / 2;
-                hat.position.y = flowerTop.y - flowerTop.height / 2;
+                hat.scale.set(.35)
+                hat.position.x = flowerTop.x - flowerTop.width / 2 + 40;
+                hat.position.y = flowerTop.y - flowerTop.height / 2 + 20;
                 this.addChild(hat)
 
 
