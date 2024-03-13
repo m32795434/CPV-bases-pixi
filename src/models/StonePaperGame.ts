@@ -1,6 +1,5 @@
 import { Assets, Container, HTMLText, NineSliceSprite } from "pixi.js";
 import { Button } from "./Button";
-import { app } from "..";
 
 export class StonePaperGame extends Container {
     private uiBundle: any;
@@ -72,6 +71,6 @@ export class StonePaperGame extends Container {
                 el.uncheck();
             console.log("el: ", el, "\nname: ", name)
         })
-        app.renderer.render(app.stage)
+        // app.renderer.render(app.stage)
     }
 }

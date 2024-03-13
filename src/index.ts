@@ -1,6 +1,8 @@
 import { Application, Assets, Sprite } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
 import { Onboarding } from './scenes/Onboarding';
+import { sound } from '@pixi/sound';
+
 
 // Create a new application
 export const app = new Application();
@@ -15,8 +17,13 @@ async function init() {
 
     // Bundles can be loaded in the background too!
     Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui']);
+    sound.add('my-sound', './sounds/8-bit-arcade.mp3');
 
     makeLoadScreen();
+
+    window.addEventListener('pointerup', () => {
+        sound.play('my-sound');
+    }, { once: true })
 
     window.addEventListener('resize', () => {
         const scaleX = window.innerWidth / app.screen.width;
@@ -30,6 +37,7 @@ async function init() {
         app.canvas.style.height = screenHeight + "px"
     })
     window.dispatchEvent(new Event('resize'))
+
 }
 
 async function makeLoadScreen() {
