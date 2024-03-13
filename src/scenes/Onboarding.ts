@@ -4,6 +4,7 @@ import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
 import { StonePaperGame } from "../models/StonePaperGame";
 import { AniSpace } from "../models/AniSpace";
+import { sound } from "@pixi/sound";
 
 export class Onboarding extends Container {
     constructor() {
@@ -67,9 +68,15 @@ export class Onboarding extends Container {
             stonePaperGame.position.set(150, 100)
 
             this.addChild(stonePaperGame)
+            aniGangnam.interactive = true;
+            aniGangnam.on('pointerup', this.handlePlayPause, this)
         })()
 
 
+    }
+    handlePlayPause() {
+        if (sound.isPlaying()) sound.pause('my-sound')
+        else sound.play('my-sound')
     }
 }
 

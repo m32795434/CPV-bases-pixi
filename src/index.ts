@@ -21,9 +21,9 @@ async function init() {
 
     makeLoadScreen();
 
-    window.addEventListener('pointerup', () => {
-        sound.play('my-sound');
-    }, { once: true })
+    // window.addEventListener('pointerup', () => {
+    //     sound.play('my-sound');
+    // }, { once: true })
 
     window.addEventListener('resize', () => {
         const scaleX = window.innerWidth / app.screen.width;
