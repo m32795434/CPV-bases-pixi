@@ -2,6 +2,7 @@ import { Application, Assets, Sprite } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
 import { Onboarding } from './scenes/Onboarding';
 import { sound } from '@pixi/sound';
+import { Keyboard } from './utils/Keyboard';
 
 
 // Create a new application
@@ -37,6 +38,7 @@ async function init() {
         app.canvas.style.height = screenHeight + "px"
     })
     window.dispatchEvent(new Event('resize'))
+    Keyboard.initialize();
 
 }
 

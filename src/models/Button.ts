@@ -5,21 +5,20 @@ export class Button extends Container {
     selected: Texture = new Texture;
     notSelected: Texture = new Texture;
     changeTexture = false;
-    btn: any;
+    btn: Sprite;
     checked = false
-    callb: any
     id: any
 
-    constructor(selected: Texture, notSelected: Texture, width: number, height: number, callb: any, id: any) {
+    constructor(selected: Texture, notSelected: Texture, width: number, height: number, id: any) {
         super();
-        this.callb = callb
         this.id = id;
         this.selected = selected;
         this.notSelected = notSelected;
 
         this.btn = Sprite.from(this.notSelected)
         this.btn.position.set(width, height)
-        this.btn.interactive = true;
+        this.btn.eventMode = 'dynamic';
+        this.eventMode = 'dynamic';
         this.btn.on("mouseup", this.mouseupHandler, this)
         this.btn.on("touchend", this.touchendHandler, this)
         this.btn.on("mouseover", this.mouseoverHandler, this)
@@ -34,10 +33,10 @@ export class Button extends Container {
         }
     }
     mouseupHandler() {
+        this.emit('changeChecked', { name: this.id })
         this.changeTexture = !this.changeTexture
         this.checked = !this.checked
         this.btn.texture = this.checked ? this.selected : this.notSelected
-        this.callb(this.id)
     }
     mouseoverHandler() {
         this.btn.texture = this.selected
@@ -48,6 +47,6 @@ export class Button extends Container {
     touchendHandler() {
         this.checked = !this.checked
         this.btn.texture = this.checked ? this.selected : this.notSelected
-        this.callb(this.id)
+        this.emit('changeChecked', { name: this.id })
     }
 }
