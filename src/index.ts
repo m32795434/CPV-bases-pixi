@@ -55,7 +55,7 @@ async function makeLoadScreen() {
     //     .rect(scene.x, scene.y, scene.width, scene.height)
     //     .stroke(0x0000ff)
     // app.stage.addChild(contStroke)
-    app.renderer.render(app.stage)
+    // app.renderer.render(app.stage)
     console.log("makeloadscreen stage childs: ", app.stage.children)
 }
 
