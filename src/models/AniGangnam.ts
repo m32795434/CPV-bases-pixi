@@ -1,10 +1,12 @@
-import { AnimatedSprite, Assets, Container } from "pixi.js";
+import { AnimatedSprite, Assets, Container, Ticker } from "pixi.js";
+import { Keyboard } from "../utils/Keyboard";
+import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 
-export class AniGangnam extends Container {
-    aniGangman: AnimatedSprite = new AnimatedSprite([])//poner en any, para build
+export class AniGangnam extends Container implements IUpdatableContainer {
+    private aniGangman: any;//poner en any, para build
     constructor() {
         super();
-        this.createSprite();
+        this.createSprite()
     }
 
     createSprite = async () => {
@@ -22,5 +24,17 @@ export class AniGangnam extends Container {
         //     .stroke(0x0000ff)
 
         this.addChild(this.aniGangman)
+        Ticker.shared.add(this.update, this)
+    }
+    update() {
+
+        if (Keyboard.state.get("ArrowRight")) {
+            this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
+            this.aniGangman.x++
+        }
+        if (Keyboard.state.get("ArrowLeft")) {
+            this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
+            this.aniGangman.x--
+        }
     }
 }

@@ -39,7 +39,6 @@ async function init() {
     })
     window.dispatchEvent(new Event('resize'))
     Keyboard.initialize();
-
 }
 
 async function makeLoadScreen() {
