@@ -7,9 +7,10 @@ import { Keyboard } from './utils/Keyboard';
 
 // Create a new application
 export const app = new Application();
+let finalScreenHeight: number, finalScreenWidth: number;
 async function init() {
     // Initialize the application
-    await app.init({ background: '#1099bb', width: 600, height: 600 });
+    await app.init({ background: '#1099bb', width: window.innerWidth, height: window.innerHeight });
 
     // Append the application canvas to the document body
     document.body.appendChild(app.canvas);
@@ -31,11 +32,11 @@ async function init() {
         const scaleY = window.innerHeight / app.screen.height
         const scale = Math.min(scaleX, scaleY)
 
-        const screenWidth = Math.round(app.canvas.width * scale)//the same..app.canvas.width, app.screen.width are the initial values
-        const screenHeight = Math.round(app.screen.height * scale)
+        finalScreenWidth = Math.round(app.canvas.width * scale)//the same..app.canvas.width, app.screen.width are the initial values
+        finalScreenHeight = Math.round(app.screen.height * scale)
 
-        app.canvas.style.width = screenWidth + "px"
-        app.canvas.style.height = screenHeight + "px"
+        app.canvas.style.width = finalScreenWidth + "px"
+        app.canvas.style.height = finalScreenHeight + "px"
     })
     window.dispatchEvent(new Event('resize'))
     Keyboard.initialize();
@@ -82,3 +83,4 @@ export async function makeGameScreen() {
 }
 
 init();
+export { finalScreenHeight, finalScreenWidth }
