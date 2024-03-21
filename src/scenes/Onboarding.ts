@@ -1,4 +1,4 @@
-import { Assets, Container, Text } from "pixi.js";
+import { Assets, Container, Text, Ticker } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
 import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
@@ -48,13 +48,16 @@ export class Onboarding extends Container {
             ship.scale.set(.7)
 
             this.addChild(ship, title, flowerToptWithHat, aniGangnam, triangle4, version,)
-
             const stonePaperGame = new StonePaperGame();
             stonePaperGame.position.set(150, 100)
 
             this.addChild(stonePaperGame)
             aniGangnam.interactive = true;
             aniGangnam.on('pointerup', this.handlePlayPause, this)
+
+            Ticker.shared.add(function (t: Ticker) {
+                aniGangnam.update(t);
+            })
         })()
 
 

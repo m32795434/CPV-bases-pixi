@@ -1,3 +1,5 @@
+import { Ticker } from "pixi.js";
+
 export interface IUpdatableContainer {
-    update(): void
+    update(t: Ticker): void
 }
