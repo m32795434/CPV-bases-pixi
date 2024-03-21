@@ -6,7 +6,9 @@ import { StonePaperGame } from "../models/StonePaperGame";
 import { AniSpace } from "../models/AniSpace";
 import { sound } from "@pixi/sound";
 
+export let aniGangnamScaleFactor = .2;
 export class Onboarding extends Container {
+
     constructor() {
         super();
         (async () => {
@@ -18,7 +20,7 @@ export class Onboarding extends Container {
             flowerToptWithHat.scale.set(0.5)
             flowerToptWithHat.position.set(250, 500)
             const aniGangnam: AniGangnam = new AniGangnam();
-            aniGangnam.scale.set(.2)
+            aniGangnam.scale.set(aniGangnamScaleFactor)
 
             const triangle4: Triangle = new Triangle();
             triangle4.position.set(0, 125)

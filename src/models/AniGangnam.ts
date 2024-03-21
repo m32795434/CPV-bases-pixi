@@ -3,6 +3,7 @@ import { Keyboard } from "../utils/Keyboard";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 import { PhysicsContainer } from "./PhysicsContainer";
 import { finalScreenHeight, finalScreenWidth } from "..";
+import { aniGangnamScaleFactor } from "../scenes/Onboarding";
 
 export class AniGangnam extends Container implements IUpdatableContainer {
     private aniGangman!: AnimatedSprite;
@@ -43,32 +44,34 @@ export class AniGangnam extends Container implements IUpdatableContainer {
     update(t: Ticker) {
         if (this.aniGangman) {
             const ds = t.deltaMS / 1000 * 5;
+            this.physGangnam.update(ds)
             this.aniGangman.update(t)
             if (Keyboard.state.get("ArrowRight")) {
+                this.physGangnam.speed.x += 100
                 // this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
                 // this.aniGangman.x += this.speed * ds
             }
             if (Keyboard.state.get("ArrowLeft")) {
+                this.physGangnam.speed.x -= 100
+
                 // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
                 // this.aniGangman.x -= this.speed * ds
             }
-            const gangnamTotalWith = (this.physGangnam.x + this.physGangnam.width) * .2
-            const gangnamTotalHeight = (this.physGangnam.y + this.physGangnam.height) * .2
+            const gangnamTotalWith = (this.physGangnam.x + this.physGangnam.width) * aniGangnamScaleFactor
+            const gangnamTotalHeight = (this.physGangnam.y + this.physGangnam.height) * aniGangnamScaleFactor
             if (gangnamTotalWith > finalScreenWidth) {
                 this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x) * -1
                 // this.physGangnam.scale.x = -1
-                this.aniGangman.tint = 0xff00ff
-            } else if (this.physGangnam.x * .2 < 0) {
+                this.physGangnam.tint = 0xff00ff
+            } else if (this.physGangnam.x * aniGangnamScaleFactor < 0) {
                 this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x)
                 // this.physGangnam.scale.x = 1
-                this.aniGangman.tint = 0x00ff00
+                this.physGangnam.tint = 0x00ff00
 
             }
             if (gangnamTotalHeight > finalScreenHeight) {
                 this.physGangnam.speed.y = Math.abs(this.physGangnam.speed.y) * -1
             }
-            this.physGangnam.update(ds)
-            console.log(this.physGangnam.speed.y)
         }
     }
 }
