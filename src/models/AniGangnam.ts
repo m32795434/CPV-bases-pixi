@@ -1,8 +1,8 @@
-import { AnimatedSprite, Assets, Container, Point, Ticker } from "pixi.js";
+import { AnimatedSprite, Assets, Container, Graphics, Point, Ticker } from "pixi.js";
 import { Keyboard } from "../utils/Keyboard";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 import { PhysicsContainer } from "./PhysicsContainer";
-import { finalScreenWidth } from "..";
+import { finalScreenHeight, finalScreenWidth } from "..";
 
 export class AniGangnam extends Container implements IUpdatableContainer {
     private aniGangman!: AnimatedSprite;
@@ -32,14 +32,18 @@ export class AniGangnam extends Container implements IUpdatableContainer {
         this.physGangnam = new PhysicsContainer();
         this.physGangnam.addChild(this.aniGangman)
         this.addChild(this.physGangnam)
-        this.physGangnam.speed.set(50, 10)
+        this.physGangnam.speed.set(50, 0)
+        this.physGangnam.acce.set(0, 150)
         console.log("finalScreenWidth: ", finalScreenWidth)
         console.log("window.innerWidth: ", window.innerWidth)
-
+        const physGangCircle = new Graphics()
+            .circle(0, 0, 20)
+            .fill(0xff00ff)
+        this.physGangnam.addChild(physGangCircle)
     }
     update(t: Ticker) {
         if (this.aniGangman) {
-            const ds = t.deltaMS / 1000 * 90;
+            const ds = t.deltaMS / 1000 * 10;
             this.aniGangman.update(t)
             if (Keyboard.state.get("ArrowRight")) {
                 // this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
@@ -50,9 +54,14 @@ export class AniGangnam extends Container implements IUpdatableContainer {
                 // this.aniGangman.x -= this.speed * ds
             }
             const gangnamTotalWith = (this.physGangnam.x + this.physGangnam.width) * .2
+            const gangnamTotalHeight = (this.physGangnam.y + this.physGangnam.height) * .2
             if (gangnamTotalWith > finalScreenWidth) {
-                this.physGangnam.x -= (this.physGangnam.width * 0.2)
                 this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x) * -1
+            } else if (this.physGangnam.x * 0.2 < 0) {
+                this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x)
+            }
+            if (gangnamTotalHeight > finalScreenHeight) {
+                this.physGangnam.speed.y = Math.abs(this.physGangnam.speed.y) * -1
             }
             this.physGangnam.update(ds)
         }
