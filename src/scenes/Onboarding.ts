@@ -5,8 +5,11 @@ import { Triangle } from "../models/Triangle";
 import { StonePaperGame } from "../models/StonePaperGame";
 import { AniSpace } from "../models/AniSpace";
 import { sound } from "@pixi/sound";
+import { AnimatedZombie } from "../models/AnimatedZombie";
 
 export let aniGangnamScaleFactor = .2;
+export let aniZombieScaleFactor = 1;
+
 export class Onboarding extends Container {
 
     constructor() {
@@ -21,6 +24,8 @@ export class Onboarding extends Container {
             flowerToptWithHat.position.set(250, 500)
             const aniGangnam: AniGangnam = new AniGangnam();
             aniGangnam.scale.set(aniGangnamScaleFactor)
+            aniGangnam.interactive = true;
+            aniGangnam.on('pointerup', this.handlePlayPause, this)
 
             const triangle4: Triangle = new Triangle();
             triangle4.position.set(0, 125)
@@ -49,16 +54,18 @@ export class Onboarding extends Container {
             ship.position.set(10, 450)
             ship.scale.set(.7)
 
-            this.addChild(ship, title, flowerToptWithHat, aniGangnam, triangle4, version,)
             const stonePaperGame = new StonePaperGame();
             stonePaperGame.position.set(150, 100)
 
-            this.addChild(stonePaperGame)
-            aniGangnam.interactive = true;
-            aniGangnam.on('pointerup', this.handlePlayPause, this)
+            const animatedZombie = new AnimatedZombie();
+            animatedZombie.scale.set(aniZombieScaleFactor)
+            animatedZombie.interactive = true;
+
+            this.addChild(animatedZombie, stonePaperGame, ship, title, flowerToptWithHat, aniGangnam, triangle4, version,)
 
             Ticker.shared.add(function (t: Ticker) {
                 aniGangnam.update(t);
+                animatedZombie.update(t)
             })
         })()
 

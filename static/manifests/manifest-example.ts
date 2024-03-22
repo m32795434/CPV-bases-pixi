@@ -43,6 +43,23 @@ const manifestExample = {
             ],
         },
         {
+            name: 'zombie',
+            assets: [
+                {
+                    alias: 'character_zombie_run0',
+                    src: '../zombie/character_zombie_run0.png',
+                },
+                {
+                    alias: 'character_zombie_run1',
+                    src: '../zombie/character_zombie_run1.png',
+                },
+                {
+                    alias: 'character_zombie_run2',
+                    src: '../zombie/character_zombie_run2.png',
+                },
+            ],
+        },
+        {
             name: 'ui',
             assets: [
                 {
