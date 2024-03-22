@@ -61,7 +61,7 @@ export class StonePaperGame extends Container {
         })()
     }
     onkeydown(e: KeyboardEvent): void {
-        console.log("key: ", e.code)
+        // console.log("key: ", e.code)
         this.dialog.text = e.code
     }
     changeChecked(arg: any) {

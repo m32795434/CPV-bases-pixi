@@ -41,6 +41,7 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
                 this.zombiePlayer.x = 0
             }
             if (zombiePTotalHeight > finalScreenHeight) {
+                this.zombiePlayer.canJump = 0;
                 this.zombiePlayer.y = finalScreenHeight - this.zombiePlayer.height * aniZombieScaleFactor
             }
         }
