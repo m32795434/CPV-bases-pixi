@@ -1,6 +1,7 @@
 import { AnimatedSprite, Assets, Graphics, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
+import { aniZombieScaleFactor } from '../scenes/Onboarding';
 
 export class Player extends ZombiePhysContainer {
     public aniZombie!: AnimatedSprite;
@@ -23,10 +24,14 @@ export class Player extends ZombiePhysContainer {
         this.aniZombie.play();
 
         this.addChild(this.aniZombie)
-        const physZombieCircle = new Graphics()
-            .circle(0, 0, 20)
+        const auxO = new Graphics()
+            .circle(0, 0, 2)
             .fill(0xff00ff)
-        this.addChild(physZombieCircle)
+        const auxOne = new Graphics()
+            .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
+            .fill(0xff00ff)
+
+        this.addChild(auxO, auxOne)
 
         this.acce.y = Player.GRAVITY;
         // this.speed.x = Player.HORIZONTAL_SPEED
