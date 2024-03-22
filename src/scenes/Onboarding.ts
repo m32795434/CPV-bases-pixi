@@ -1,6 +1,5 @@
 import { Assets, Container, Text, Ticker } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
-import { AniGangnam } from "../models/AniGangnam";
 import { Triangle } from "../models/Triangle";
 import { StonePaperGame } from "../models/StonePaperGame";
 import { AniSpace } from "../models/AniSpace";
@@ -22,10 +21,10 @@ export class Onboarding extends Container {
             // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
             flowerToptWithHat.scale.set(0.5)
             flowerToptWithHat.position.set(250, 500)
-            const aniGangnam: AniGangnam = new AniGangnam();
-            aniGangnam.scale.set(aniGangnamScaleFactor)
-            aniGangnam.interactive = true;
-            aniGangnam.on('pointerup', this.handlePlayPause, this)
+            // const aniGangnam: AniGangnam = new AniGangnam();
+            // aniGangnam.scale.set(aniGangnamScaleFactor)
+            // aniGangnam.interactive = true;
+            // aniGangnam.on('pointerup', this.handlePlayPause, this)
 
             const triangle4: Triangle = new Triangle();
             triangle4.position.set(0, 125)
@@ -61,10 +60,10 @@ export class Onboarding extends Container {
             animatedZombie.scale.set(aniZombieScaleFactor)
             animatedZombie.interactive = true;
 
-            this.addChild(animatedZombie, stonePaperGame, ship, title, flowerToptWithHat, aniGangnam, triangle4, version,)
+            this.addChild(animatedZombie, stonePaperGame, ship, title, flowerToptWithHat, triangle4, version,)
 
             Ticker.shared.add(function (t: Ticker) {
-                aniGangnam.update(t);
+                // aniGangnam.update(t);
                 animatedZombie.update(t)
             })
         })()
