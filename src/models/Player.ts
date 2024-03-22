@@ -19,9 +19,9 @@ export class Player extends PhysicsContainer {
         this.aniZombie.play();
 
         this.addChild(this.aniZombie)
-        const physGangCircle = new Graphics()
+        const physZombieCircle = new Graphics()
             .circle(0, 0, 20)
             .fill(0xff00ff)
-        this.addChild(physGangCircle)
+        this.addChild(physZombieCircle)
     }
 }

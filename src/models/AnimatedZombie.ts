@@ -11,20 +11,23 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
     private zombiePlayer!: Player;
     constructor() {
         super();
-        this.createSprite()
+        this.create()
     }
 
-    createSprite = async () => {
+    create = () => {
         this.zombiePlayer = new Player()
+        this.zombiePlayer.speed.set(500, 0)
+        this.zombiePlayer.acce.set(0, 1000)
         this.addChild(this.zombiePlayer)
     }
     update(t: Ticker) {
         if (this.zombiePlayer.aniZombie) {
+            console.log("this.zombiePlayer.speed", this.zombiePlayer.speed)
+            console.log("this.zombiePlayer.x", this.zombiePlayer.x)
             const localTicker = new Ticker()
             localTicker.deltaTime = t.deltaTime * 5
-            const ds = t.deltaMS / 1000 * 20;
-            this.zombiePlayer.update(ds)
-            this.zombiePlayer.aniZombie.update(localTicker)
+            const ds = t.deltaMS / 1000;
+
             if (Keyboard.state.get("ArrowRight")) {
                 this.zombiePlayer.speed.x += 100
                 // this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
@@ -36,9 +39,9 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
                 // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
                 // this.aniGangman.x -= this.speed * ds
             }
-            const gangnamTotalWith = (this.zombiePlayer.x + this.zombiePlayer.width) * aniZombieScaleFactor
-            const gangnamTotalHeight = (this.zombiePlayer.y + this.zombiePlayer.height) * aniZombieScaleFactor
-            if (gangnamTotalWith > finalScreenWidth) {
+            const zombiePTotalWith = (this.zombiePlayer.x + this.zombiePlayer.width) * aniZombieScaleFactor
+            const zombiePTotalHeight = (this.zombiePlayer.y + this.zombiePlayer.height) * aniZombieScaleFactor
+            if (zombiePTotalWith > finalScreenWidth) {
                 this.zombiePlayer.speed.x = Math.abs(this.zombiePlayer.speed.x) * -1
                 // this.zombiePlayer.scale.x = -1
                 this.zombiePlayer.tint = 0xff00ff
@@ -48,9 +51,11 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
                 this.zombiePlayer.tint = 0x00ff00
 
             }
-            if (gangnamTotalHeight > finalScreenHeight) {
+            if (zombiePTotalHeight > finalScreenHeight) {
                 this.zombiePlayer.speed.y = Math.abs(this.zombiePlayer.speed.y) * -1
             }
+            this.zombiePlayer.update(ds)
+            this.zombiePlayer.aniZombie.update(localTicker)
         }
     }
 }
