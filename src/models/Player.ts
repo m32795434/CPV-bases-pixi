@@ -9,6 +9,7 @@ export class Player extends ZombiePhysContainer {
     private static readonly VERTICAL_SPEED = 500;
     private static readonly GRAVITY: number = 1000;
     public canJump = 0;
+    private hitBox!: Graphics;
     constructor() {
         super();
         this.createSprite()
@@ -34,7 +35,10 @@ export class Player extends ZombiePhysContainer {
             .fill(0xff00ff)
 
         this.addChild(auxO, auxOne)
-
+        this.hitBox = new Graphics()
+            .rect((this.aniZombie.x - (this.aniZombie.width / 2)) * aniZombieScaleFactor, 0, this.aniZombie.width * aniZombieScaleFactor, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor)
+            .fill(0xff00ff, 0.3)
+        this.addChild(this.hitBox)
         this.acce.y = Player.GRAVITY;
         // this.speed.x = Player.HORIZONTAL_SPEED
         Keyboard.down.on("ArrowUp", this.jump, this)
