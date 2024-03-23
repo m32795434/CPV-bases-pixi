@@ -1,13 +1,14 @@
 import { Assets, Container, Text, Ticker } from "pixi.js";
 import { FlowerWithHat } from "../models/Flower-with-hat";
-import { Triangle } from "../models/Triangle";
 import { StonePaperGame } from "../models/StonePaperGame";
-import { AniSpace } from "../models/AniSpace";
 import { sound } from "@pixi/sound";
 import { AnimatedZombie } from "../models/AnimatedZombie";
+import { Platform } from "../models/Platform";
+import { finalScreenWidth } from "..";
 
 export let aniGangnamScaleFactor = .2;
 export let aniZombieScaleFactor = 1;
+export let platfomScaleFactor = .1;
 
 export class Onboarding extends Container {
 
@@ -16,25 +17,28 @@ export class Onboarding extends Container {
         (async () => {
             await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
-            const flowerToptWithHat: FlowerWithHat = new FlowerWithHat();
-            //all contanier's properties, FIRST
-            // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
-            flowerToptWithHat.scale.set(0.5)
-            flowerToptWithHat.position.set(250, 500)
+
             // const aniGangnam: AniGangnam = new AniGangnam();
             // aniGangnam.scale.set(aniGangnamScaleFactor)
             // aniGangnam.interactive = true;
             // aniGangnam.on('pointerup', this.handlePlayPause, this)
 
-            const triangle4: Triangle = new Triangle();
-            triangle4.position.set(0, 125)
-            triangle4.scale.set(.3)
+            // const triangle4: Triangle = new Triangle();
+            // triangle4.position.set(0, 125)
+            // triangle4.scale.set(.3)
 
             const title = new Text({
                 text: '¡ONBOARDING!',
                 style: { fontFamily: 'ShortStack Regular' }
             })
-            title.position.set(100, 20)
+            title.anchor.set(.5)
+            title.position.set(finalScreenWidth / 2, 20)
+
+            const flowerToptWithHat: FlowerWithHat = new FlowerWithHat();
+            //all contanier's properties, FIRST
+            // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
+            flowerToptWithHat.scale.set(0.5)
+            flowerToptWithHat.position.set(finalScreenWidth - 100, 150)
 
 
             const version: Text = new Text({
@@ -45,22 +49,33 @@ export class Onboarding extends Container {
                     fill: 0x900000
                 }
             })
-            version.position.set(600 - version.width - 5, 600 - version.height - 10)
+            version.position.set(finalScreenWidth - version.width - 5, version.height - 10)
             version.angle = -5;
 
 
-            const ship = new AniSpace();
-            ship.position.set(10, 450)
-            ship.scale.set(.7)
+            // const ship = new AniSpace();
+            // ship.position.set(10, 450)
+            // ship.scale.set(.7)
 
             const stonePaperGame = new StonePaperGame();
-            stonePaperGame.position.set(150, 100)
+            stonePaperGame.position.set(10, 10)
 
             const animatedZombie = new AnimatedZombie();
             animatedZombie.scale.set(aniZombieScaleFactor)
             animatedZombie.interactive = true;
 
-            this.addChild(animatedZombie, stonePaperGame, ship, title, flowerToptWithHat, triangle4, version,)
+            const platform1 = new Platform()
+            platform1.scale.set(platfomScaleFactor)
+            platform1.position.set(200, 600)
+
+            const platform2 = new Platform()
+            platform2.scale.set(platfomScaleFactor)
+            platform2.position.set(600, 600)
+
+
+            this.addChild(platform1, platform2)
+
+            this.addChild(animatedZombie, stonePaperGame, title, flowerToptWithHat, version,)
 
             Ticker.shared.add(function (t: Ticker) {
                 // aniGangnam.update(t);

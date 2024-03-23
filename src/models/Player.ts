@@ -37,7 +37,7 @@ export class Player extends ZombiePhysContainer {
         this.addChild(auxO, auxOne)
         this.hitBox = new Graphics()
             .rect((this.aniZombie.x - (this.aniZombie.width / 2)) * aniZombieScaleFactor, 0, this.aniZombie.width * aniZombieScaleFactor, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor)
-            .fill(0xff00ff, 0.3)
+            .fill({ color: 0xff00ff, alpha: 0.3 })
         this.addChild(this.hitBox)
         this.acce.y = Player.GRAVITY;
         // this.speed.x = Player.HORIZONTAL_SPEED
@@ -53,7 +53,7 @@ export class Player extends ZombiePhysContainer {
 
         } else if (Keyboard.state.get("ArrowLeft")) {
             this.speed.x = -Player.HORIZONTAL_SPEED
-            this.scale.x = -1
+            this.scale.x = -1//I didn't set the pivot for "this", just the animatedSprite anchor to the .5 in x. Then the graphics are positionated from the animatedSprite position(x,y,size, anchor),I add the graphisc to the container ,and it doesn't matter if I scale.x the animated, or container. At last, I set the scaleFactor for x and y, to the instance of the container in the scene
 
         } else {
             this.speed.x = 0

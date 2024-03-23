@@ -43,6 +43,15 @@ const manifestExample = {
             ],
         },
         {
+            name: 'platform',
+            assets: [
+                {
+                    alias: 'platform_no_grass',
+                    src: '../platform/platform_no_grass.png',
+                },
+            ],
+        },
+        {
             name: 'zombie',
             assets: [
                 {
