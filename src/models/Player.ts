@@ -1,4 +1,4 @@
-import { AnimatedSprite, Assets, Graphics, Ticker } from 'pixi.js';
+import { AnimatedSprite, Assets, DestroyOptions, Graphics, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
 import { aniZombieScaleFactor } from '../scenes/Onboarding';
@@ -22,14 +22,15 @@ export class Player extends ZombiePhysContainer {
             zombieBundle.character_zombie_run2,
         ], false)
         this.aniZombie.animationSpeed = 0.05;
+        this.aniZombie.anchor.set(.5, 0)
         this.aniZombie.play();
 
         this.addChild(this.aniZombie)
         const auxO = new Graphics()
-            .circle(0, 0, 2)
+            .circle((this.aniZombie.x - (this.aniZombie.width / 2)) * aniZombieScaleFactor, 0, 2)
             .fill(0xff00ff)
         const auxOne = new Graphics()
-            .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
+            .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor / 2, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
             .fill(0xff00ff)
 
         this.addChild(auxO, auxOne)
@@ -44,9 +45,11 @@ export class Player extends ZombiePhysContainer {
 
         if (Keyboard.state.get("ArrowRight")) {
             this.speed.x = Player.HORIZONTAL_SPEED
+            this.scale.x = 1
 
         } else if (Keyboard.state.get("ArrowLeft")) {
             this.speed.x = -Player.HORIZONTAL_SPEED
+            this.scale.x = -1
 
         } else {
             this.speed.x = 0
@@ -57,6 +60,10 @@ export class Player extends ZombiePhysContainer {
         //     this.speed.y = Player.VERTICAL_SPEED
 
         // }
+    }
+    public override destroy(options?: DestroyOptions | undefined): void {
+        super.destroy(options)
+        Keyboard.down.off("ArrowUp", this.jump)
     }
     private jump() {
         if (this.canJump < 2) {

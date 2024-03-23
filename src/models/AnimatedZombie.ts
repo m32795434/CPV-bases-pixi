@@ -33,12 +33,12 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
             //     // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
             //     // this.aniGangman.x -= this.speed * ds
             // }
-            const zombiePTotalWith = (this.zombiePlayer.x + this.zombiePlayer.width) * aniZombieScaleFactor
+            const zombiePTotalWith = (this.zombiePlayer.x + this.zombiePlayer.width / 2) * aniZombieScaleFactor
             const zombiePTotalHeight = (this.zombiePlayer.y + this.zombiePlayer.height) * aniZombieScaleFactor
             if (zombiePTotalWith > finalScreenWidth) {
-                this.zombiePlayer.x = finalScreenWidth - this.zombiePlayer.width * aniZombieScaleFactor
-            } else if (this.zombiePlayer.x * aniZombieScaleFactor < 0) {
-                this.zombiePlayer.x = 0
+                this.zombiePlayer.x = finalScreenWidth - this.zombiePlayer.width / 2 * aniZombieScaleFactor
+            } else if ((this.zombiePlayer.x - this.zombiePlayer.width / 2) * aniZombieScaleFactor < 0) {
+                this.zombiePlayer.x = 0 + this.zombiePlayer.width / 2
             }
             if (zombiePTotalHeight > finalScreenHeight) {
                 this.zombiePlayer.canJump = 0;
