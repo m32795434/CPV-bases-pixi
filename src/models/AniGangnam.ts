@@ -31,14 +31,14 @@ export class AniGangnam extends Container implements IUpdatableContainer {
         // Ticker.shared.add(this.update, this)
         this.physGangnam = new PhysicsContainer();
         this.physGangnam.addChild(this.aniGangman, gangHitBox)
-        this.addChild(this.physGangnam)
         this.physGangnam.speed.set(500, 0)
-        this.physGangnam.acce.set(0, 150)
+        this.physGangnam.acce.set(0, 100)
 
         const physGangCircle = new Graphics()
-            .circle(0, 0, 20)
-            .fill(0xff00ff)
+            .circle(0, 0, 5 * (1 / aniGangnamScaleFactor))
+            .fill({ color: 0xff00ff, alpha: .3 })
         this.physGangnam.addChild(physGangCircle)
+        this.addChild(this.physGangnam)
     }
     update(t: Ticker) {
         if (this.aniGangman) {

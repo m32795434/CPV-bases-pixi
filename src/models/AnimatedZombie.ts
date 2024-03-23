@@ -34,15 +34,19 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
             //     // this.aniGangman.x -= this.speed * ds
             // }
             const zombiePTotalWith = (this.zombiePlayer.x + this.zombiePlayer.width / 2) * aniZombieScaleFactor
-            const zombiePTotalHeight = (this.zombiePlayer.y + this.zombiePlayer.height) * aniZombieScaleFactor
+            const zombieFloor = this.zombiePlayer.y * aniZombieScaleFactor
             if (zombiePTotalWith > finalScreenWidth) {
-                this.zombiePlayer.x = finalScreenWidth - this.zombiePlayer.width / 2 * aniZombieScaleFactor
+                this.zombiePlayer.x = finalScreenWidth * (1 / aniZombieScaleFactor) - this.zombiePlayer.width / 2
             } else if ((this.zombiePlayer.x - this.zombiePlayer.width / 2) * aniZombieScaleFactor < 0) {
                 this.zombiePlayer.x = 0 + this.zombiePlayer.width / 2
             }
-            if (zombiePTotalHeight > finalScreenHeight) {
+            if (zombieFloor > finalScreenHeight) {
                 this.zombiePlayer.canJump = 0;
-                this.zombiePlayer.y = finalScreenHeight - this.zombiePlayer.height * aniZombieScaleFactor
+                //Because I want to see in the screen a value, that will be scaled
+                this.zombiePlayer.y = finalScreenHeight * (1 / aniZombieScaleFactor)
+                this.zombiePlayer.speed.y = 0
+                // this.zombiePlayer.speed.y = Math.abs(this.zombiePlayer.speed.y) * -1
+
             }
         }
     }

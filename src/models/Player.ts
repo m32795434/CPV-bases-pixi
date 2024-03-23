@@ -23,7 +23,7 @@ export class Player extends ZombiePhysContainer {
             zombieBundle.character_zombie_run2,
         ], false)
         this.aniZombie.animationSpeed = 0.05;
-        this.aniZombie.anchor.set(.5, 0)
+        this.aniZombie.anchor.set(.5, 1)
         this.aniZombie.play();
 
         this.addChild(this.aniZombie)
@@ -36,7 +36,7 @@ export class Player extends ZombiePhysContainer {
 
         // this.addChild(auxO, auxOne)
         this.hitBox = new Graphics()
-            .rect(this.aniZombie.x - this.aniZombie.width / 2, 0, this.aniZombie.width, this.aniZombie.height)
+            .rect(this.aniZombie.x - this.aniZombie.width / 2, this.aniZombie.y - this.aniZombie.height, this.aniZombie.width, this.aniZombie.height)
             .fill({ color: 0xff00ff, alpha: 0.3 })
         this.addChild(auxO, this.hitBox)
         this.acce.y = Player.GRAVITY;
