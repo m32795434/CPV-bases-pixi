@@ -1,5 +1,4 @@
 import { AnimatedSprite, Assets, Container, Graphics, Ticker } from "pixi.js";
-import { Keyboard } from "../utils/Keyboard";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 import { PhysicsContainer } from "./PhysicsContainer";
 import { finalScreenHeight, finalScreenWidth } from "..";
@@ -23,15 +22,15 @@ export class AniGangnam extends Container implements IUpdatableContainer {
         this.aniGangman.animationSpeed = 0.05;
         this.aniGangman.play();
 
-        // const aniGangStroke = new Graphics()
-        //     .rect(this.x, this.y, this.width, this.height)
-        //     .stroke(0x0000ff)
+        const gangHitBox = new Graphics()
+            .rect(0, 0, this.aniGangman.width, this.aniGangman.height)
+            .fill({ color: 0x0000ff, alpha: .3 })
 
         // this.localTicker = new Ticker();
         // this.localTicker.add(this.update, this)
         // Ticker.shared.add(this.update, this)
         this.physGangnam = new PhysicsContainer();
-        this.physGangnam.addChild(this.aniGangman)
+        this.physGangnam.addChild(this.aniGangman, gangHitBox)
         this.addChild(this.physGangnam)
         this.physGangnam.speed.set(500, 0)
         this.physGangnam.acce.set(0, 150)
@@ -46,17 +45,17 @@ export class AniGangnam extends Container implements IUpdatableContainer {
             const ds = t.deltaMS / 1000 * 5;
             this.physGangnam.update(ds)
             this.aniGangman.update(t)
-            if (Keyboard.state.get("ArrowRight")) {
-                this.physGangnam.speed.x += 100
-                // this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
-                // this.aniGangman.x += this.speed * ds
-            }
-            if (Keyboard.state.get("ArrowLeft")) {
-                this.physGangnam.speed.x -= 100
+            // if (Keyboard.state.get("ArrowRight")) {
+            //     this.physGangnam.speed.x += 100
+            //     // this.aniGangman.animationSpeed < 1 ? this.aniGangman.animationSpeed += 0.01 : null
+            //     // this.aniGangman.x += this.speed * ds
+            // }
+            // if (Keyboard.state.get("ArrowLeft")) {
+            //     this.physGangnam.speed.x -= 100
 
-                // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
-                // this.aniGangman.x -= this.speed * ds
-            }
+            //     // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
+            //     // this.aniGangman.x -= this.speed * ds
+            // }
             const gangnamTotalWith = (this.physGangnam.x + this.physGangnam.width) * aniGangnamScaleFactor
             const gangnamTotalHeight = (this.physGangnam.y + this.physGangnam.height) * aniGangnamScaleFactor
             if (gangnamTotalWith > finalScreenWidth) {

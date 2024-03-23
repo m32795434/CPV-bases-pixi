@@ -28,17 +28,17 @@ export class Player extends ZombiePhysContainer {
 
         this.addChild(this.aniZombie)
         const auxO = new Graphics()
-            .circle((this.aniZombie.x - (this.aniZombie.width / 2)) * aniZombieScaleFactor, 0, 2)
-            .fill(0xff00ff)
-        const auxOne = new Graphics()
-            .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor / 2, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
-            .fill(0xff00ff)
-
-        this.addChild(auxO, auxOne)
-        this.hitBox = new Graphics()
-            .rect((this.aniZombie.x - (this.aniZombie.width / 2)) * aniZombieScaleFactor, 0, this.aniZombie.width * aniZombieScaleFactor, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor)
+            .circle(0, 0, 5 * (1 / aniZombieScaleFactor))
             .fill({ color: 0xff00ff, alpha: 0.3 })
-        this.addChild(this.hitBox)
+        // const auxOne = new Graphics()
+        //     .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor / 2, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
+        //     .fill({ color: 0xff00ff, alpha: 0.3 })
+
+        // this.addChild(auxO, auxOne)
+        this.hitBox = new Graphics()
+            .rect(this.aniZombie.x - this.aniZombie.width / 2, 0, this.aniZombie.width, this.aniZombie.height)
+            .fill({ color: 0xff00ff, alpha: 0.3 })
+        this.addChild(auxO, this.hitBox)
         this.acce.y = Player.GRAVITY;
         // this.speed.x = Player.HORIZONTAL_SPEED
         Keyboard.down.on("ArrowUp", this.jump, this)

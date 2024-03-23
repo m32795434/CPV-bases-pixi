@@ -5,8 +5,9 @@ import { sound } from "@pixi/sound";
 import { AnimatedZombie } from "../models/AnimatedZombie";
 import { Platform } from "../models/Platform";
 import { finalScreenWidth } from "..";
+import { AniGangnam } from "../models/AniGangnam";
 
-export let aniGangnamScaleFactor = .2;
+export let aniGangnamScaleFactor = .1;
 export let aniZombieScaleFactor = 1;
 export let platfomScaleFactor = .1;
 
@@ -18,10 +19,10 @@ export class Onboarding extends Container {
             await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
 
-            // const aniGangnam: AniGangnam = new AniGangnam();
-            // aniGangnam.scale.set(aniGangnamScaleFactor)
-            // aniGangnam.interactive = true;
-            // aniGangnam.on('pointerup', this.handlePlayPause, this)
+            const aniGangnam: AniGangnam = new AniGangnam();
+            aniGangnam.scale.set(aniGangnamScaleFactor)
+            aniGangnam.interactive = true;
+            aniGangnam.on('pointerup', this.handlePlayPause, this)
 
             // const triangle4: Triangle = new Triangle();
             // triangle4.position.set(0, 125)
@@ -75,10 +76,10 @@ export class Onboarding extends Container {
 
             this.addChild(platform1, platform2)
 
-            this.addChild(animatedZombie, stonePaperGame, title, flowerToptWithHat, version,)
+            this.addChild(aniGangnam, animatedZombie, stonePaperGame, title, flowerToptWithHat, version,)
 
             Ticker.shared.add(function (t: Ticker) {
-                // aniGangnam.update(t);
+                aniGangnam.update(t);
                 animatedZombie.update(t)
             })
         })()

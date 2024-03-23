@@ -1,6 +1,9 @@
-import { Assets, Container, Sprite } from "pixi.js";
+import { Assets, Container, Graphics, Point, Sprite } from "pixi.js";
+import { platfomScaleFactor } from "../scenes/Onboarding";
 
 export class Platform extends Container {
+    private hitBox!: Graphics;
+    // private pltSprite!: Sprite
     constructor() {
         super()
         this.createSprite()
@@ -9,8 +12,22 @@ export class Platform extends Container {
     createSprite = async () => {
         const pltBundle = await Assets.loadBundle('platform')
 
-        const plt = new Sprite(pltBundle.platform_no_grass)
-        this.addChild(plt)
+        const pltSprite = new Sprite(pltBundle.platform_no_grass)
+        pltSprite.anchor.set(.5, 0)
+        this.addChild(pltSprite)
+        console.log("plt.width", pltSprite.width)
+        console.log("plt.height", pltSprite.height)
+        console.log("plt.x", pltSprite.toGlobal(new Point()))
+
+        const pt = new Graphics()
+            //if I want to see for example 10px outside, here I use the scaleFactor^-1
+            .circle(0, 0, 5 * (1 / platfomScaleFactor))
+            .fill({ color: 0xff00ff, alpha: 0.3 })
+        this.hitBox = new Graphics()
+            //If I scale the instance outside, here, It doesn't matters. I use here, the real size.
+            .rect(pltSprite.x - pltSprite.width / 2, 0, pltSprite.width, pltSprite.height)
+            .fill({ color: 0xff00ff, alpha: 0.3 })
+        this.addChild(pt, this.hitBox)
     }
 
 }
