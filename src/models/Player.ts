@@ -71,7 +71,6 @@ export class Player extends ZombiePhysContainer {
     }
     private jump() {
         if (this.canJump < 2) {
-            console.log("arrouup")
             this.speed.y = -Player.VERTICAL_SPEED
             this.canJump++
         }

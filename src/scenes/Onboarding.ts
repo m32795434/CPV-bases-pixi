@@ -8,7 +8,7 @@ import { finalScreenWidth } from "..";
 import { AniGangnam } from "../models/AniGangnam";
 
 export let aniGangnamScaleFactor = .2;
-export let aniZombieScaleFactor = .5;
+export let aniZombieScaleFactor = 1.2;
 export let platfomScaleFactor = .1;
 
 export class Onboarding extends Container {
