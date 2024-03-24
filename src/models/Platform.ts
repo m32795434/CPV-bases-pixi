@@ -11,8 +11,8 @@ export class Platform extends Container implements IHitbox {
 
     }
     getHitbox(): Rectangle {
-        // console.log("this.hitBox.getBounds()", this.hitBox.getBounds().rectangle)
         return this.hitBox.getBounds().rectangle;
+        // console.log("this.hitBox.getBounds()", this.hitBox.getBounds().rectangle)
     }
     createSprite = async () => {
         const pltBundle = await Assets.loadBundle('platform')

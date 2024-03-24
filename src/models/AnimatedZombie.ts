@@ -1,29 +1,30 @@
-import { Container, Ticker } from "pixi.js";
+import { AnimatedSprite, Container, Ticker } from "pixi.js";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 import { finalScreenHeight, finalScreenWidth, scene } from "..";
 import { aniZombieScaleFactor } from "../scenes/Onboarding";
-import { Player } from "./Player";
+import { AnimatedPlayer } from "./AnimatedPlayer";
 import { checkCollision } from "../interfaces/IHitbox";
 
 // TickerScene
 export class AnimatedZombie extends Container implements IUpdatableContainer {
     //playerDino
-    private zombiePlayer!: Player;
-
+    private zombiePlayer!: AnimatedPlayer;
+    public aniSprite!: AnimatedSprite;
     constructor() {
         super();
         this.create()
     }
 
-    create = () => {
-        this.zombiePlayer = new Player()
+    create = async () => {
+
+        this.zombiePlayer = new AnimatedPlayer(this.aniSprite)
         this.addChild(this.zombiePlayer)
     }
     update(t: Ticker) {
-        if (this.zombiePlayer.aniZombie) {
+        if (this.zombiePlayer.player) {
             this.zombiePlayer.update(t)
 
-            console.log(checkCollision(this.zombiePlayer, scene.getPlats()[0]))
+            console.log(checkCollision(this.zombiePlayer, scene.plats[0]))
 
 
             //ATENTION!

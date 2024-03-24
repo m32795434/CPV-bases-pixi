@@ -3,11 +3,12 @@ import manifestExample from '../static/manifests/manifest-example';
 import { Onboarding } from './scenes/Onboarding';
 import { sound } from '@pixi/sound';
 import { Keyboard } from './utils/Keyboard';
+import { Scene } from './interfaces/Scene';
 
 
 // Create a new application
 export const app = new Application();
-export let scene: Onboarding;
+export let scene: Scene;
 let finalScreenHeight: number, finalScreenWidth: number;
 async function init() {
     // Initialize the application
