@@ -9,7 +9,7 @@ import { Scene } from "../interfaces/Scene";
 import { AnimatedPlayer } from "../models/AnimatedPlayer";
 
 export let aniGangnamScaleFactor = .2;
-export let aniZombieScaleFactor = 1.2;
+export let aniZombieScaleFactor = 1.75;
 export let platfomScaleFactor = .1;
 
 export class Onboarding extends Scene {

@@ -52,11 +52,11 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
 
                 if (Keyboard.state.get("ArrowRight")) {
                     this.speed.x = AnimatedPlayer.HORIZONTAL_SPEED
-                    this.scale.x = 1
+                    this.player.scale.x = 1
 
                 } else if (Keyboard.state.get("ArrowLeft")) {
                     this.speed.x = -AnimatedPlayer.HORIZONTAL_SPEED
-                    this.scale.x = -1//I didn't set the pivot for "this", just the animatedSprite anchor to the .5 in x. Then the graphics are positionated from the animatedSprite position(x,y,size, anchor),I add the graphisc to the container ,and it doesn't matter if I scale.x the animated, or container. At last, I set the scaleFactor for x and y, to the instance of the container in the scene
+                    this.player.scale.x = -1//I didn't set the pivot for "this", just the animatedSprite anchor to the .5 in x. Then the graphics are positionated from the animatedSprite position(x,y,size, anchor),I add the graphisc to the container ,and it doesn't matter if I scale.x the animated, or container. At last, I set the scaleFactor for x and y, to the instance of the container in the scene
 
                 } else {
                     this.speed.x = 0
@@ -64,15 +64,14 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
 
                 //ATENTION!
                 //si comparo con otras cosas aplico scaleFactor
-                const zombieLeftLimit = (this.x + this.width / 2) * aniZombieScaleFactor
-                const zombieFloor = this.y * aniZombieScaleFactor
-
+                const zombieLeftLimit = (this.x + this.width / 2)
+                const zombieFloor = this.y
                 if (zombieLeftLimit > finalScreenWidth) {
                     //ATENTION!
                     //si me asigno en la posición mi propio width o posición, no aplico factor
                     // si me asigno en la posición otro valor real como finalScreenWidth aplico inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes)
 
-                    this.x = finalScreenWidth * (1 / aniZombieScaleFactor) - this.width / 2
+                    this.x = finalScreenWidth - this.width / 2
 
                 } else if ((this.x - this.width / 2) * aniZombieScaleFactor < 0) {
                     this.x = this.width / 2
@@ -80,7 +79,7 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
                 if (zombieFloor > finalScreenHeight) {
                     this.canJump = 0;
                     //ATENTION!
-                    this.y = finalScreenHeight * (1 / aniZombieScaleFactor)
+                    this.y = finalScreenHeight
                     this.speed.y = 0
                     // this.speed.y = Math.abs(this.speed.y) * -1
                 }
