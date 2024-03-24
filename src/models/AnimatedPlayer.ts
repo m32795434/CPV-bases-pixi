@@ -62,23 +62,22 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
                     this.speed.x = 0
                 }
 
-                //ATENTION!
-                //si comparo con otras cosas aplico scaleFactor
+                //NOTAS! Ahora escalo la instancia de this (padre del sprite), y agrego al padre los graphics, y posiciono tdo de acuerdo a este padre : this.x, this.y, etc....NO NECESITO APLICAR SCALE FACTORS
+                //Ancla y scale.x, aplico al hijo (sprite)
+                //ANTES:
+                //Escalaba la instancia de AnimatedZombie (padre), pero desde el padre posicionaba al hijo AnimatedZombie.zombiePlayer.x = algo
+                //si le reasignaba la posicion al hijo, con su propio width o posición, desde el padre, no aplicaba factor
+                // si utilizaba otro valor real como finalScreenWidth aplicaba inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes antes de asignar al hijo que va a estar reducido) commit 1e05196
                 const zombieLeftLimit = (this.x + this.width / 2)
                 const zombieFloor = this.y
                 if (zombieLeftLimit > finalScreenWidth) {
-                    //ATENTION!
-                    //si me asigno en la posición mi propio width o posición, no aplico factor
-                    // si me asigno en la posición otro valor real como finalScreenWidth aplico inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes)
-
                     this.x = finalScreenWidth - this.width / 2
 
-                } else if ((this.x - this.width / 2) * aniZombieScaleFactor < 0) {
+                } else if ((this.x - this.width / 2) < 0) {
                     this.x = this.width / 2
                 }
                 if (zombieFloor > finalScreenHeight) {
                     this.canJump = 0;
-                    //ATENTION!
                     this.y = finalScreenHeight
                     this.speed.y = 0
                     // this.speed.y = Math.abs(this.speed.y) * -1
