@@ -3,7 +3,7 @@ import { Rectangle } from "pixi.js";
 export interface IHitbox {
     getHitbox(): Rectangle;
 }
-export function checkCollision(objtA: IHitbox, objtB: IHitbox): boolean {
+export function checkCollision(objtA: IHitbox, objtB: IHitbox): Rectangle | null {
     const rA = objtA.getHitbox()
     const rB = objtB.getHitbox()
 
@@ -14,6 +14,16 @@ export function checkCollision(objtA: IHitbox, objtB: IHitbox): boolean {
 
     const makesSenseHori = mostRighttLeft < mostLeftRight
     const makesSenseVert = mostBottomTop < mostTopBottom
-    if (makesSenseHori && makesSenseVert) return true
-    else return false
+    if (makesSenseHori && makesSenseVert) {
+
+
+        const rectVal = new Rectangle()
+        rectVal.x = mostRighttLeft;
+        rectVal.y = mostBottomTop;
+        rectVal.width = mostLeftRight - mostRighttLeft
+        rectVal.height = mostTopBottom - mostBottomTop
+        return rectVal
+    }
+
+    else return null
 }

@@ -1,4 +1,4 @@
-import { AnimatedSprite, DestroyOptions, Graphics, Rectangle, Ticker } from 'pixi.js';
+import { AnimatedSprite, DestroyOptions, Graphics, ObservablePoint, Rectangle, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
 import { aniZombieScaleFactor } from '../scenes/Onboarding';
@@ -47,7 +47,15 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
                 super.update(t)//from ZombiePhysContainer
                 this.player.update(t) // for the AnimatedSprite
 
-                console.log(checkCollision(this, scene.plats[0]))
+                for (const plat of scene.plats) {
+                    const overlap = checkCollision(this, plat)
+                    if (overlap != null) {
+                        this.separate(overlap, plat.position)
+                        console.log("overlap", overlap)
+                        this.speed.y = 0
+                        this.canJump = 0;
+                    }
+                }
 
 
                 if (Keyboard.state.get("ArrowRight")) {
@@ -94,6 +102,24 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
         }
 
 
+    }
+    public separate(overlap: Rectangle, plat: ObservablePoint) {
+        if (overlap.width < overlap.height) {
+
+            if (this.x > plat.x) {
+                this.x += overlap.width
+            } else if (this.x < plat.x) {
+                this.x -= overlap.width
+            }
+        } else {
+            if (this.y > plat.y) {
+                this.y -= overlap.height
+            }
+            // else if (this.y < plat.y) {
+            //     this.y += overlap.height
+            // }
+            // this.y -= overlap.height;
+        }
     }
     public override destroy(options?: DestroyOptions | undefined): void {
         super.destroy(options)
