@@ -1,9 +1,10 @@
-import { AnimatedSprite, Assets, DestroyOptions, Graphics, Ticker } from 'pixi.js';
+import { AnimatedSprite, Assets, DestroyOptions, Graphics, Rectangle, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
 import { aniZombieScaleFactor } from '../scenes/Onboarding';
+import { IHitbox } from '../interfaces/IHitbox';
 
-export class Player extends ZombiePhysContainer {
+export class Player extends ZombiePhysContainer implements IHitbox {
     public aniZombie!: AnimatedSprite;
     private static readonly HORIZONTAL_SPEED = 500;
     private static readonly VERTICAL_SPEED = 500;
@@ -42,10 +43,12 @@ export class Player extends ZombiePhysContainer {
         this.acce.y = Player.GRAVITY;
         // this.speed.x = Player.HORIZONTAL_SPEED
         Keyboard.down.on("ArrowUp", this.jump, this)
+        this.getHitbox()
     }
     public override update(t: Ticker): void {
         super.update(t)
         this.aniZombie.update(t)
+
 
         if (Keyboard.state.get("ArrowRight")) {
             this.speed.x = Player.HORIZONTAL_SPEED
@@ -59,10 +62,9 @@ export class Player extends ZombiePhysContainer {
             this.speed.x = 0
         }
 
-
+        // console.log("checkCollision",checkCollision())
         // } else if (Keyboard.state.get("ArrowDown")) {
         //     this.speed.y = Player.VERTICAL_SPEED
-
         // }
     }
     public override destroy(options?: DestroyOptions | undefined): void {
@@ -74,5 +76,9 @@ export class Player extends ZombiePhysContainer {
             this.speed.y = -Player.VERTICAL_SPEED
             this.canJump++
         }
+    }
+    getHitbox(): Rectangle {
+        // console.log("this.hitBox.getBounds()", this.hitBox.getBounds().rectangle)
+        return this.hitBox.getBounds().rectangle;
     }
 }

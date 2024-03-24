@@ -1,8 +1,9 @@
 import { Container, Ticker } from "pixi.js";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
-import { finalScreenHeight, finalScreenWidth } from "..";
+import { finalScreenHeight, finalScreenWidth, scene } from "..";
 import { aniZombieScaleFactor } from "../scenes/Onboarding";
 import { Player } from "./Player";
+import { checkCollision } from "../interfaces/IHitbox";
 
 // TickerScene
 export class AnimatedZombie extends Container implements IUpdatableContainer {
@@ -22,15 +23,19 @@ export class AnimatedZombie extends Container implements IUpdatableContainer {
         if (this.zombiePlayer.aniZombie) {
             this.zombiePlayer.update(t)
 
+            console.log(checkCollision(this.zombiePlayer, scene.getPlats()[0]))
+
 
             //ATENTION!
+            //si comparo con otras cosas aplico scaleFactor
             const zombieLeftLimit = (this.zombiePlayer.x + this.zombiePlayer.width / 2) * aniZombieScaleFactor
             const zombieFloor = this.zombiePlayer.y * aniZombieScaleFactor
-            // console.log("this.zombiePlayer.width", this.zombiePlayer.width)//si hay scale -> real
-            // console.log("finalScreenWidth", finalScreenWidth)//si hay scale -> real
-            // console.log("this.zombiePlayer.x", this.zombiePlayer.x)//si hay scale -> NO ES real. Idem "y". Si el scale<1, este valor saldrá de la pantalla
+
             if (zombieLeftLimit > finalScreenWidth) {
                 //ATENTION!
+                //si me asigno en la posición mi propio width o posición, no aplico factor
+                // si me asigno en la posición otro valor real como finalScreenWidth aplico inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes)
+
                 this.zombiePlayer.x = finalScreenWidth * (1 / aniZombieScaleFactor) - this.zombiePlayer.width / 2
 
             } else if ((this.zombiePlayer.x - this.zombiePlayer.width / 2) * aniZombieScaleFactor < 0) {

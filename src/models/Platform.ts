@@ -1,13 +1,18 @@
-import { Assets, Container, Graphics, Point, Sprite } from "pixi.js";
+import { Assets, Container, Graphics, Point, Rectangle, Sprite } from "pixi.js";
 import { platfomScaleFactor } from "../scenes/Onboarding";
+import { IHitbox } from "../interfaces/IHitbox";
 
-export class Platform extends Container {
+export class Platform extends Container implements IHitbox {
     private hitBox!: Graphics;
     // private pltSprite!: Sprite
     constructor() {
         super()
         this.createSprite()
 
+    }
+    getHitbox(): Rectangle {
+        // console.log("this.hitBox.getBounds()", this.hitBox.getBounds().rectangle)
+        return this.hitBox.getBounds().rectangle;
     }
     createSprite = async () => {
         const pltBundle = await Assets.loadBundle('platform')

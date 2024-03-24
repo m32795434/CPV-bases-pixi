@@ -8,16 +8,18 @@ import { finalScreenWidth } from "..";
 import { AniGangnam } from "../models/AniGangnam";
 
 export let aniGangnamScaleFactor = .2;
-export let aniZombieScaleFactor = 1.2;
+export let aniZombieScaleFactor = 1;
 export let platfomScaleFactor = .1;
 
 export class Onboarding extends Container {
 
+    private plats!: Platform[];
     constructor() {
         super();
         (async () => {
             await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
+            this.plats = []
 
             const aniGangnam: AniGangnam = new AniGangnam();
             aniGangnam.scale.set(aniGangnamScaleFactor)
@@ -68,10 +70,12 @@ export class Onboarding extends Container {
             const platform1 = new Platform()
             platform1.scale.set(platfomScaleFactor)
             platform1.position.set(200, 600)
+            this.plats.push(platform1)
 
             const platform2 = new Platform()
             platform2.scale.set(platfomScaleFactor)
             platform2.position.set(600, 600)
+            this.plats.push(platform2)
 
 
             this.addChild(platform1, platform2)
@@ -89,6 +93,9 @@ export class Onboarding extends Container {
     handlePlayPause() {
         if (sound.isPlaying()) sound.pause('my-sound')
         else sound.play('my-sound')
+    }
+    public getPlats() {
+        return this.plats;
     }
 }
 

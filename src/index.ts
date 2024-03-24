@@ -7,6 +7,7 @@ import { Keyboard } from './utils/Keyboard';
 
 // Create a new application
 export const app = new Application();
+export let scene: Onboarding;
 let finalScreenHeight: number, finalScreenWidth: number;
 async function init() {
     // Initialize the application
@@ -45,8 +46,7 @@ async function init() {
 async function makeLoadScreen() {
     // const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
-    const scene = new Onboarding();
-    console.log("scene", scene)
+    scene = new Onboarding();
     scene.label = "Onboarding"
     app.stage.addChild(scene)
 
@@ -56,7 +56,6 @@ async function makeLoadScreen() {
     //     .stroke(0x0000ff)
     // app.stage.addChild(contStroke)
     // app.renderer.render(app.stage)
-    console.log("makeloadscreen stage childs: ", app.stage.children)
 }
 
 export async function makeGameScreen() {
