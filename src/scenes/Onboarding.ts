@@ -1,4 +1,4 @@
-import { AnimatedSprite, Assets, Ticker } from "pixi.js";
+import { AnimatedSprite, Assets, Container, Sprite, Ticker } from "pixi.js";
 import { sound } from "@pixi/sound";
 import { Platform } from "../models/Platform";
 import { AniGangnam } from "../models/AniGangnam";
@@ -11,19 +11,28 @@ export let platfomScaleFactor = .1;
 
 export class Onboarding extends Scene {
 
+    private animatedZombie!: AnimatedPlayer;
+    private world!: Container;
+    private aniGangnam!: AniGangnam;
+
     constructor() {
+
         super();
         (async () => {
             await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
             const zombieBundle = await Assets.loadBundle('zombie')
+            const bkTexture = await Assets.load("./platform/bk-planet.jpg")
+            const bk = Sprite.from(bkTexture)
 
             this._plats = []
+            this.world = new Container();
+            this.world.addChild(bk)
 
-            const aniGangnam: AniGangnam = new AniGangnam();
-            aniGangnam.scale.set(aniGangnamScaleFactor)
-            aniGangnam.interactive = true;
-            aniGangnam.on('pointerup', this.handlePlayPause, this)
+            this.aniGangnam = new AniGangnam();
+            this.aniGangnam.scale.set(aniGangnamScaleFactor)
+            this.aniGangnam.interactive = true;
+            this.aniGangnam.on('pointerup', this.handlePlayPause, this)
 
             const zombie1Sprite = new AnimatedSprite([
                 zombieBundle.character_zombie_run0,
@@ -32,9 +41,9 @@ export class Onboarding extends Scene {
             ], false)
             zombie1Sprite.animationSpeed = 0.05;
 
-            const animatedZombie = new AnimatedPlayer(zombie1Sprite);
-            animatedZombie.scale.set(aniZombieScaleFactor)
-            animatedZombie.interactive = true;
+            this.animatedZombie = new AnimatedPlayer(zombie1Sprite);
+            this.animatedZombie.scale.set(aniZombieScaleFactor)
+            this.animatedZombie.interactive = true;
 
             const platform1 = new Platform()
             platform1.scale.set(platfomScaleFactor)
@@ -46,14 +55,14 @@ export class Onboarding extends Scene {
             platform2.position.set(600, 600)
             this._plats.push(platform2)
 
+            this.world.addChild(platform1, platform2, this.aniGangnam, this.animatedZombie)
 
-            this.addChild(platform1, platform2)
+            this.addChild(this.world)
 
-            this.addChild(aniGangnam, animatedZombie)
 
-            Ticker.shared.add(function (t: Ticker) {
-                aniGangnam.update(t);
-                animatedZombie.update(t)
+            Ticker.shared.add((t: Ticker) => {
+                this.aniGangnam.update(t);
+                this.animatedZombie.update(t)
             })
         })()
 
