@@ -50,13 +50,6 @@ async function makeLoadScreen() {
     scene = new Onboarding();
     scene.label = "Onboarding"
     app.stage.addChild(scene)
-
-    //I can't do this anymore
-    // const contStroke = new Graphics()
-    //     .rect(scene.x, scene.y, scene.width, scene.height)
-    //     .stroke(0x0000ff)
-    // app.stage.addChild(contStroke)
-    // app.renderer.render(app.stage)
 }
 
 export async function makeGameScreen() {

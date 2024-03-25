@@ -1,5 +1,5 @@
 import { Assets, Container, Graphics, Sprite } from "pixi.js";
-import { app, makeGameScreen } from "..";
+import { app, makeGameScreen } from "../..";
 
 export class FlowerWithHat extends Container {
     constructor() {

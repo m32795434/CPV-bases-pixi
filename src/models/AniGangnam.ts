@@ -2,7 +2,7 @@ import { AnimatedSprite, Assets, Container, Graphics, Ticker } from "pixi.js";
 import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
 import { PhysicsContainer } from "./PhysicsContainer";
 import { finalScreenHeight, finalScreenWidth } from "..";
-import { aniGangnamScaleFactor } from "../scenes/Onboarding";
+import { aniGangnamScaleFactor } from "../scenes/not-in-use/Onboarding-no-camera";
 
 export class AniGangnam extends Container implements IUpdatableContainer {
     private aniGangman!: AnimatedSprite;

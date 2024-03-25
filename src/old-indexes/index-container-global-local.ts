@@ -1,5 +1,5 @@
 import { Application, Assets, Sprite, Graphics, Container, Point } from 'pixi.js';
-import manifestExample from '../static/manifests/manifest-example';
+import manifestExample from '../../static/manifests/manifest-example';
 
 // Create a new application
 const app = new Application();
@@ -13,8 +13,6 @@ async function init() {
     // Append the application canvas to the document body
     document.body.appendChild(app.canvas);
 
-    console.log("Init------\n canvas.width, canvas.height", app.canvas.width, app.canvas.height)
-    console.log("Init------\n screen.width, screen.height", app.screen.width, app.screen.height)
     // Manifest example
     // Assets.init must only happen once! 
     // Pack all your bundles into one manifest!
@@ -38,7 +36,7 @@ async function init() {
         console.log("resized------app.canvas.clientWidth:", app.canvas.clientWidth)
         console.log("resized------app.canvas.clientHeight", app.canvas.clientHeight)
     })
-    window.dispatchEvent(new Event('resize'))
+    // window.dispatchEvent(new Event('resize'))
 }
 
 async function makeLoadScreen() {
@@ -50,69 +48,57 @@ async function makeLoadScreen() {
     // Create a new Sprite from the resolved loaded texture
     const flowerTop = new Sprite(loadScreenAssets['load-screen'].flowerTop);//119*181
     const hat = new Sprite(loadScreenAssets['load-screen'].hat);//47*28
-
-    //Data> If I want to load assets without a manifest:
-    const texture1 = await Assets.load('clampy.png');
-    const clampy = Sprite.from(texture1);
-
-
-    clampy.anchor.set(1)
-    clampy.x = app.screen.width;
-    clampy.y = app.screen.height;
-    clampy.scale.x = 0.5
-    clampy.scale.y = 0.5
-    app.stage.addChild(clampy)
+    // const texture1 = await Assets.load("./clampy.png")
+    // const clampy = Sprite.from(texture1)
 
     const flowerToptWithHat: Container = new Container();
     //all contanier's properties, FIRST
-    //flowerToptWithHat.position.set(40, 60)
+    // flowerToptWithHat.pivot.set(flowerToptWithHat.width, flowerToptWithHat.height)
+    flowerToptWithHat.position.set(50, 150)
 
-    flowerTop.anchor.set(0.5);
-    flowerTop.x = app.screen.width / 2;
-    flowerTop.y = app.screen.height / 2;
+    // flowerTop.anchor.set(0.5);
+    // flowerTop.x = app.screen.width / 2;
+    // flowerTop.y = app.screen.height / 2;
     //we have .rotation, .angle, .scale too, and more!
     flowerToptWithHat.addChild(flowerTop)
 
     const flowerTopStroke = new Graphics()
-        .rect((flowerTop.x - flowerTop.width / 2), (flowerTop.y - flowerTop.height / 2), flowerTop.width, flowerTop.height)
+        .rect((flowerTop.x), (flowerTop.y), flowerTop.width, flowerTop.height)
         .stroke(0x0000ff)
-    console.log("flowerTopStroke x: ", (flowerTop.x - flowerTop.width / 2))//300-119/2= 300-59.5 = 240.5
-    console.log("flowerTopStroke end x: ", (flowerTop.x - flowerTop.width / 2) + flowerTop.width)//240.5+119=359.5
-    console.log("flowerTop.toLocal Point: ", flowerTop.toLocal(new Point()))//-300:-300//to return to the origin of the canvas
-    console.log("flowerTop.toGlobal(new Point()): ", flowerTop.toGlobal(new Point()))//300:300 to move the origin to the object
-    console.log("flowerTop.parent.toGlobal(flowerTop)", flowerTop.parent.toGlobal(flowerTop))//300:300
 
-    const aux1 = new Point(600, 600)
-    // flowerTopStroke.position.copyFrom(aux);
-    console.log("aux1 = new Point(600, 600)\n", aux1)
-
-    // graphics.rect((goNext.x - goNext.width / 2), (goNext.y - goNext.height / 2), goNext.width, goNext.height);
-    // graphics.fill(0x0000ff);
     flowerToptWithHat.addChild(flowerTopStroke)
 
-    hat.anchor.set(0.5);
-    // hat.scale.set(0.9, 0.9);
-    hat.x = flowerTop.x;
-    hat.y = flowerTop.y - (flowerTop.height / 2)
+    // hat.anchor.set(0.5);
+    // hat.scale.set(0.5, 0.5);
+    //Position, from its parent
+    hat.position.x = flowerTop.x - flowerTop.width / 2.5;
+    hat.position.y = flowerTop.y - flowerTop.height / 3;
     flowerToptWithHat.addChild(hat)
 
 
     const hatStroke = new Graphics()
-        .rect((hat.x - hat.width / 2), (hat.y - hat.height / 2), hat.width, hat.height)
+        .rect(hat.x, hat.y, hat.width, hat.height)
         .stroke(0x0000ff);
     flowerToptWithHat.addChild(hatStroke)
 
-    //-------------------About Global and Local
-    // console.log(hat.toGlobal(new Point()))
-    // console.log(hat.parent.toGlobal(hat.position))
+    //flowerToptWithHat.scale.set(0.5, 0.5)
+    //BEE AWARE OF a CHILD SCALE!***
+    //obj.toLocal --> distance "from" this "obj"
 
-    // const aux = hat.parent.toLocal(new Point(600, 600))
-    // hat.position.copyFrom(aux);
-    //-------------------END About Global and Local
-
+    console.log("hat.toGlobal(new Point(0,0)", hat.toGlobal(new Point()))//GOOD! from global orgin (0)
+    console.log("flowerToptWithHat.toLocal(new Point(50,150)))", flowerToptWithHat.toLocal(new Point(50, 150)))//GOOD, Wich point is the global (50, 150), in the local.
+    console.log("hat.toLocal(new Point(0, 0))?:", hat.toLocal(new Point()))//***GOOD! Distncce from where I am, to the global O.
+    console.log("hat.toLocal(flowerToptWithHat): ", hat.toLocal(flowerToptWithHat))//***GOOD! How much to reach the father//
+    console.log("flowerToptWithHat.toLocal(hat):", flowerToptWithHat.toLocal(hat))// USEFUL?! THIS IS THE DISTANCE FROM THE global O, to the container + de distance from the container to the obj
+    console.log("hat.toGlobal(flowerToptWithHat): ", hat.toGlobal(flowerToptWithHat))//son.toGlobal(father)--> the distance from the O to the child+the distance from O to the father
+    console.log("flowerToptWithHat.toGlobal(hat):", flowerToptWithHat.toGlobal(hat))// GOOD! idem hat.toGlobal(new Point(0, 0))
+    console.log(`hat width: `, hat.width, "hat.height ", hat.height)
 
     app.stage.addChild(flowerToptWithHat)
-
+    const contStroke = new Graphics()
+        .rect(flowerToptWithHat.x, flowerToptWithHat.y, flowerToptWithHat.width, flowerToptWithHat.height)
+        .stroke(0x0000ff)
+    app.stage.addChild(contStroke)
     // let elapsed = 0.0;
     // app.ticker.add((ticker: any) => {
     // 	elapsed += ticker.deltaTime;

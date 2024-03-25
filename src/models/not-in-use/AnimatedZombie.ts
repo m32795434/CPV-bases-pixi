@@ -1,9 +1,9 @@
 import { AnimatedSprite, Container, Ticker } from "pixi.js";
-import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
-import { finalScreenHeight, finalScreenWidth, scene } from "..";
-import { aniZombieScaleFactor } from "../scenes/Onboarding";
-import { AnimatedPlayer } from "./AnimatedPlayer";
-import { checkCollision } from "../interfaces/IHitbox";
+import { IUpdatableContainer } from '../../interfaces/IUpdatableContainer';
+import { finalScreenHeight, finalScreenWidth, scene } from "../..";
+import { aniZombieScaleFactor } from "../../scenes/not-in-use/Onboarding-no-camera";
+import { AnimatedPlayer } from "../AnimatedPlayer";
+import { checkCollision } from "../../interfaces/IHitbox";
 
 // TickerScene
 export class AnimatedZombie extends Container implements IUpdatableContainer {

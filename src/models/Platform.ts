@@ -1,5 +1,5 @@
 import { Assets, Container, Graphics, Point, Rectangle, Sprite } from "pixi.js";
-import { platfomScaleFactor } from "../scenes/Onboarding";
+import { platfomScaleFactor } from "../scenes/not-in-use/Onboarding-no-camera";
 import { IHitbox } from "../interfaces/IHitbox";
 
 export class Platform extends Container implements IHitbox {

@@ -1,7 +1,7 @@
 import { AnimatedSprite, DestroyOptions, Graphics, ObservablePoint, Rectangle, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
-import { aniZombieScaleFactor } from '../scenes/Onboarding';
+import { aniZombieScaleFactor } from '../scenes/not-in-use/Onboarding-no-camera';
 import { IHitbox, checkCollision } from '../interfaces/IHitbox';
 import { finalScreenHeight, finalScreenWidth, scene } from '..';
 
@@ -105,7 +105,7 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
     }
     public separate(overlap: Rectangle, plat: ObservablePoint) {
         if (overlap.width < overlap.height) {
-
+            //Si quiero que no escale, debo setear una direccion, y anular la HORIZONTAL_SPEED. Solo si cambia la direccion, vuelve a su valor original HORIZONTAL_SPEED
             if (this.x > plat.x) {
                 this.x += overlap.width
             } else if (this.x < plat.x) {

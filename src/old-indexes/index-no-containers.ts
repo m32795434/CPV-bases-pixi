@@ -18,7 +18,7 @@
 // ------------------------------ END Previous app
 
 import { Application, Assets, Sprite, Graphics } from 'pixi.js';
-import manifestExample from '../static/manifests/manifest-example';
+import manifestExample from '../../static/manifests/manifest-example';
 
 // Create a new application
 const app = new Application();
