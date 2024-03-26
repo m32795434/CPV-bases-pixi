@@ -114,6 +114,9 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             this.world.x = -this._player.x * this.worldTransform.a + finalScreenWidth / 4
             this.background.tilePosition.x = this.world.x * .5
             this.world.y = -this._player.y * this.worldTransform.d + finalScreenHeight - 150
+
+            console.log("this.world.x", this.world.x)
+            console.log("this.world.y", this.world.y)
             // this.background.tilePosition.y = this.world.y * .5 // with this in off, is more real...like seeing to outside in from a window in a train
 
         } catch (error) {

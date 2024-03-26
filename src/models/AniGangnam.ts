@@ -1,6 +1,6 @@
 import { AnimatedSprite, DestroyOptions, Graphics, Rectangle, Ticker } from "pixi.js";
 import { PhysicsContainer } from "./PhysicsContainer";
-import { finalScreenHeight, finalScreenWidth } from "..";
+import { finalScreenHeight, finalScreenWidth, scene } from "..";
 import { aniGangnamScaleFactor } from "../scenes/not-in-use/Onboarding-no-camera";
 import { IHitbox } from "../interfaces/IHitbox";
 
@@ -49,19 +49,22 @@ export class AniGangnam extends PhysicsContainer implements IHitbox {
             //     // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
             //     // this.aniGangman.x -= this.speed * ds
             // }
+
+            const moveX = scene._player.x
+            const moveY = scene._player.y
             const gangnamRightLimit = this.x + this.width
             const gangnamFloor = this.y + this.height
-            if (gangnamRightLimit > finalScreenWidth) {
+            if (gangnamRightLimit > finalScreenWidth + moveX) {
                 this.speed.x = Math.abs(this.speed.x) * -1
                 // this.physGangnam.scale.x = -1
                 this.tint = 0xff00ff
-            } else if (this.x < 0) {
+            } else if (this.x < 0 + moveX) {
                 this.speed.x = Math.abs(this.speed.x)
                 // this.physGangnam.scale.x = 1
                 this.tint = 0x00ff00
 
             }
-            if (gangnamFloor > finalScreenHeight) {
+            if (gangnamFloor > finalScreenHeight + moveY) {
                 this.speed.y = Math.abs(this.speed.y) * -1
             }
         } catch (error) {
