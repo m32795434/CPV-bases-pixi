@@ -64,9 +64,9 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
             //Escalaba la instancia de AnimatedZombie (padre), pero desde el padre posicionaba al hijo AnimatedZombie.zombiePlayer.x = algo
             //si le reasignaba la posicion al hijo, con su propio width o posición, desde el padre, no aplicaba factor
             // si utilizaba otro valor real como finalScreenWidth aplicaba inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes antes de asignar al hijo que va a estar reducido) commit 1e05196
-            const zombieLeftLimit = (this.x + this.width / 2)
+            const zombieRightLimit = (this.x + this.width / 2)
             const zombieFloor = this.y
-            if (zombieLeftLimit > finalScreenWidth) {
+            if (zombieRightLimit > finalScreenWidth) {
                 this.x = finalScreenWidth - this.width / 2
 
             } else if ((this.x - this.width / 2) < 0) {
