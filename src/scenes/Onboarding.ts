@@ -4,12 +4,14 @@ import { Platform } from "../models/Platform";
 import { AniGangnam } from "../models/AniGangnam";
 import { Scene } from "../interfaces/Scene";
 import { AnimatedPlayer } from "../models/AnimatedPlayer";
+import { IUpdatableContainer } from "../interfaces/IUpdatableContainer";
+import { checkCollision } from "../interfaces/IHitbox";
 
 export let aniGangnamScaleFactor = .2;
 export let aniZombieScaleFactor = .75;
 export let platfomScaleFactor = .1;
 
-export class Onboarding extends Scene {
+export class Onboarding extends Scene implements IUpdatableContainer {
 
     private animatedZombie!: AnimatedPlayer;
     private world!: Container;
@@ -59,17 +61,33 @@ export class Onboarding extends Scene {
 
             this.addChild(this.world)
 
-
             Ticker.shared.add((t: Ticker) => {
-                this.aniGangnam.update(t);
-                this.animatedZombie.update(t)
+                this.update(t)
             })
         })()
-
 
     }
     override handlePlayPause(): void {
         if (sound.isPlaying()) sound.pause('my-sound')
         else sound.play('my-sound')
+    }
+    update(t: Ticker): void {
+        this.aniGangnam.update(t);
+        this.animatedZombie.update(t)
+
+        try {
+            for (const plat of this._plats) {
+                const overlap = checkCollision(this.animatedZombie, plat)
+                if (overlap != null) {
+                    this.animatedZombie.separate(overlap, plat.position)
+                    console.log("overlap", overlap)
+                    this.animatedZombie.speed.y = 0
+                    this.animatedZombie.canJump = 0;
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
