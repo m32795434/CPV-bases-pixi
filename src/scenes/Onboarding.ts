@@ -1,11 +1,12 @@
-import { AnimatedSprite, Assets, Container, Sprite, Ticker } from "pixi.js";
+import { AnimatedSprite, Assets, Container, Ticker, TilingSprite } from "pixi.js";
 import { sound } from "@pixi/sound";
 import { Platform } from "../models/Platform";
 import { AniGangnam } from "../models/AniGangnam";
 import { Scene } from "../interfaces/Scene";
-import { AnimatedPlayer } from "../models/AnimatedPlayer";
+import { AnimatedPlayer } from '../models/AnimatedPlayer';
 import { IUpdatableContainer } from "../interfaces/IUpdatableContainer";
 import { checkCollision } from "../interfaces/IHitbox";
+import { finalScreenHeight, finalScreenWidth } from "..";
 
 export let aniGangnamScaleFactor = .2;
 export let aniZombieScaleFactor = .75;
@@ -18,14 +19,13 @@ export class Onboarding extends Scene implements IUpdatableContainer {
     private aniGangnam!: AniGangnam;
 
     constructor() {
-
         super();
         (async () => {
             await Assets.load('ShortStack Regular.ttf')
             await Assets.load('Roboto-Italic.ttf')
             const zombieBundle = await Assets.loadBundle('zombie')
             const bkTexture = await Assets.load("./platform/bk-planet.jpg")
-            const bk = Sprite.from(bkTexture)
+            const bk = new TilingSprite({ texture: bkTexture, width: finalScreenWidth, height: finalScreenHeight })
 
             this._plats = []
             this.world = new Container();
@@ -74,7 +74,6 @@ export class Onboarding extends Scene implements IUpdatableContainer {
     update(t: Ticker): void {
         this.aniGangnam.update(t);
         this.animatedZombie.update(t)
-
         try {
             for (const plat of this._plats) {
                 const overlap = checkCollision(this.animatedZombie, plat)
@@ -85,6 +84,8 @@ export class Onboarding extends Scene implements IUpdatableContainer {
                     this.animatedZombie.canJump = 0;
                 }
             }
+
+            this.world.x = -this.animatedZombie.x * this.worldTransform.a + finalScreenWidth / 4
         } catch (error) {
             console.log(error)
         }
