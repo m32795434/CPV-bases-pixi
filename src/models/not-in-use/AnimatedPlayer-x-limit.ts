@@ -58,12 +58,10 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
                 this.speed.x = 0
             }
 
-            //NOTAS! Ahora escalo la instancia de this (padre del sprite), y agrego al padre los graphics, y posiciono tdo de acuerdo a este padre : this.x, this.y, etc....NO NECESITO APLICAR SCALE FACTORS
-            //Ancla y scale.x, aplico al hijo (sprite)
-            //ANTES:
-            //Escalaba la instancia de AnimatedZombie (padre), pero desde el padre posicionaba al hijo AnimatedZombie.zombiePlayer.x = algo
-            //si le reasignaba la posicion al hijo, con su propio width o posición, desde el padre, no aplicaba factor
-            // si utilizaba otro valor real como finalScreenWidth aplicaba inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes antes de asignar al hijo que va a estar reducido) commit 1e05196
+
+
+
+
             const zombieRightLimit = (this.x + this.width / 2)
             const zombieFloor = this.y
             if (zombieRightLimit > finalScreenWidth) {
@@ -123,3 +121,21 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
         return this.hitBox.getBounds().rectangle;
     }
 }
+
+
+
+//NOTAS! Ahora escalo la instancia de this (padre del sprite), y agrego al padre los graphics, y posiciono tdo de acuerdo a este padre : this.x, this.y, etc....NO NECESITO APLICAR SCALE FACTORS
+//Ancla y scale.x, aplico al hijo (sprite)
+//ANTES:
+//Escalaba la instancia de AnimatedZombie (padre), pero desde el padre posicionaba al hijo AnimatedZombie.zombiePlayer.x = algo
+//si le reasignaba la posicion al hijo, aplicando valores de posicion o size de este mismo hijo (sus propios valores), desde el padre, no aplicaba factor
+// si utilizaba otro valor real como finalScreenWidth, para posicionar al hijo,  aplicaba inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes antes de asignar al hijo que va a estar reducido) commit 1e05196
+
+//Ejemplo:
+// const zombieLeftLimit = (this.zombiePlayer.x + this.zombiePlayer.width / 2) * aniZombieScaleFactor
+// const zombieFloor = this.zombiePlayer.y * aniZombieScaleFactor
+// console.log("this.zombiePlayer.width", this.zombiePlayer.width)//si hay scale -> real
+// console.log("finalScreenWidth", finalScreenWidth)//si hay scale -> real
+// console.log("this.zombiePlayer.x", this.zombiePlayer.x)//si hay scale -> NO ES real. Idem "y". Si el scale<1, este valor saldrá de la pantalla
+// if (zombieLeftLimit > finalScreenWidth) {
+// this.zombiePlayer.x = finalScreenWidth * (1 / aniZombieScaleFactor) - this.zombiePlayer.width / 2}

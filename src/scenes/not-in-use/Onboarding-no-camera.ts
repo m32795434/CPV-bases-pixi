@@ -4,7 +4,7 @@ import { StonePaperGame } from "../../models/not-in-use/StonePaperGame";
 import { sound } from "@pixi/sound";
 import { Platform } from "../../models/Platform";
 import { finalScreenWidth } from "../..";
-import { AniGangnam } from "../../models/AniGangnam";
+import { AniGangnam } from "../../models/AniGangnam-box-limits";
 import { Scene } from "../../interfaces/Scene";
 import { AnimatedPlayer } from "../../models/not-in-use/AnimatedPlayer-x-limit";
 

@@ -14,7 +14,6 @@ export let platfomScaleFactor = .1;
 
 export class Onboarding extends Scene implements IUpdatableContainer {
 
-    private animatedZombie!: AnimatedPlayer;
     private aniGangnam!: AniGangnam;
     private background!: TilingSprite;
 
@@ -43,9 +42,9 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             ], false)
             zombie1Sprite.animationSpeed = 0.05;
 
-            this.animatedZombie = new AnimatedPlayer(zombie1Sprite);
-            this.animatedZombie.scale.set(aniZombieScaleFactor)
-            this.animatedZombie.interactive = true;
+            this._player = new AnimatedPlayer(zombie1Sprite);
+            this._player.scale.set(aniZombieScaleFactor)
+            this._player.interactive = true;
 
             let platform = new Platform()
             platform.scale.set(platfomScaleFactor)
@@ -78,7 +77,7 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             this.world.addChild(platform)
 
 
-            this.world.addChild(this.aniGangnam, this.animatedZombie)
+            this.world.addChild(this.aniGangnam, this._player)
 
             this.addChild(this.world)
 
@@ -94,21 +93,21 @@ export class Onboarding extends Scene implements IUpdatableContainer {
     }
     update(t: Ticker): void {
         this.aniGangnam.update(t);
-        this.animatedZombie.update(t)
+        this._player.update(t)
         try {
             for (const plat of this._plats) {
-                const overlap = checkCollision(this.animatedZombie, plat)
+                const overlap = checkCollision(this._player, plat)
                 if (overlap != null) {
-                    this.animatedZombie.separate(overlap, plat.position)
-                    console.log("overlap", overlap)
-                    this.animatedZombie.speed.y = 0
-                    this.animatedZombie.canJump = 0;
+                    this._player.separate(overlap, plat.position)
+                    // console.log("overlap", overlap)
+                    this._player.speed.y = 0
+                    this._player.canJump = 0;
                 }
             }
 
-            this.world.x = -this.animatedZombie.x * this.worldTransform.a + finalScreenWidth / 4
+            this.world.x = -this._player.x * this.worldTransform.a + finalScreenWidth / 4
             this.background.tilePosition.x = this.world.x * .5
-            this.world.y = -this.animatedZombie.y * this.worldTransform.d + finalScreenHeight / 2
+            this.world.y = -this._player.y * this.worldTransform.d + finalScreenHeight - 150
             // this.background.tilePosition.y = this.world.y * .5 // with this in off, is more real...like seeing to outside in from a window in a train
 
         } catch (error) {
