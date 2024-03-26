@@ -1,49 +1,42 @@
-import { AnimatedSprite, Assets, Container, Graphics, Ticker } from "pixi.js";
-import { IUpdatableContainer } from '../interfaces/IUpdatableContainer';
+import { AnimatedSprite, DestroyOptions, Graphics, Rectangle, Ticker } from "pixi.js";
 import { PhysicsContainer } from "./PhysicsContainer";
 import { finalScreenHeight, finalScreenWidth } from "..";
 import { aniGangnamScaleFactor } from "../scenes/not-in-use/Onboarding-no-camera";
+import { IHitbox } from "../interfaces/IHitbox";
 
-export class AniGangnam extends Container implements IUpdatableContainer {
-    private aniGangman!: AnimatedSprite;
-    private physGangnam!: PhysicsContainer;
-    constructor() {
+export class AniGangnam extends PhysicsContainer implements IHitbox {
+    public aniGangman!: AnimatedSprite;
+    private static readonly HORIZONTAL_SPEED = 500;
+    private static readonly VERTICAL_SPEED = 0;
+    private static readonly GRAVITY: number = 1000;
+    private hitBox!: Graphics;
+    constructor(gang: AnimatedSprite) {
         super();
-        this.createSprite()
+        this.createSprite(gang)
     }
 
-    createSprite = async () => {
-        const gangnamBundle = await Assets.loadBundle('load-screen')
-        this.aniGangman = new AnimatedSprite([
-            gangnamBundle.G1,
-            gangnamBundle.G2,
-            gangnamBundle.G3,
-            gangnamBundle.G4], false)
-        this.aniGangman.animationSpeed = 0.05;
+
+    createSprite = (gang: AnimatedSprite) => {
+        this.aniGangman = gang
         this.aniGangman.play();
 
-        const gangHitBox = new Graphics()
-            .rect(0, 0, this.aniGangman.width, this.aniGangman.height)
-            .fill({ color: 0x0000ff, alpha: .3 })
-
-        // this.localTicker = new Ticker();
-        // this.localTicker.add(this.update, this)
-        // Ticker.shared.add(this.update, this)
-        this.physGangnam = new PhysicsContainer();
-        this.physGangnam.addChild(this.aniGangman, gangHitBox)
-        this.physGangnam.speed.set(500, 0)
-        this.physGangnam.acce.set(0, 100)
-
-        const physGangCircle = new Graphics()
+        this.addChild(this.aniGangman)
+        const auxO = new Graphics()
             .circle(0, 0, 5 * (1 / aniGangnamScaleFactor))
             .fill({ color: 0xff00ff, alpha: .3 })
-        this.physGangnam.addChild(physGangCircle)
-        this.addChild(this.physGangnam)
+
+        this.hitBox = new Graphics()
+            .rect(0, 0, this.aniGangman.width, this.aniGangman.height)
+            .fill({ color: 0x0000ff, alpha: .3 })
+        this.acce.y = AniGangnam.GRAVITY;
+        this.speed.set(AniGangnam.HORIZONTAL_SPEED, AniGangnam.VERTICAL_SPEED)
+
+        this.addChild(auxO, this.hitBox)
     }
-    update(t: Ticker) {
-        if (this.aniGangman) {
-            const ds = t.deltaMS / 1000 * 5;
-            this.physGangnam.update(ds)
+    public override update(t: Ticker) {
+
+        try {
+            super.update(t)
             this.aniGangman.update(t)
             // if (Keyboard.state.get("ArrowRight")) {
             //     this.physGangnam.speed.x += 100
@@ -56,21 +49,30 @@ export class AniGangnam extends Container implements IUpdatableContainer {
             //     // this.aniGangman.animationSpeed > 0 ? this.aniGangman.animationSpeed -= 0.01 : null
             //     // this.aniGangman.x -= this.speed * ds
             // }
-            const gangnamTotalWith = (this.physGangnam.x + this.physGangnam.width) * aniGangnamScaleFactor
-            const gangnamTotalHeight = (this.physGangnam.y + this.physGangnam.height) * aniGangnamScaleFactor
-            if (gangnamTotalWith > finalScreenWidth) {
-                this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x) * -1
+            const gangnamRightLimit = this.x + this.width
+            const gangnamFloor = this.y + this.height
+            if (gangnamRightLimit > finalScreenWidth) {
+                this.speed.x = Math.abs(this.speed.x) * -1
                 // this.physGangnam.scale.x = -1
-                this.physGangnam.tint = 0xff00ff
-            } else if (this.physGangnam.x * aniGangnamScaleFactor < 0) {
-                this.physGangnam.speed.x = Math.abs(this.physGangnam.speed.x)
+                this.tint = 0xff00ff
+            } else if (this.x < 0) {
+                this.speed.x = Math.abs(this.speed.x)
                 // this.physGangnam.scale.x = 1
-                this.physGangnam.tint = 0x00ff00
+                this.tint = 0x00ff00
 
             }
-            if (gangnamTotalHeight > finalScreenHeight) {
-                this.physGangnam.speed.y = Math.abs(this.physGangnam.speed.y) * -1
+            if (gangnamFloor > finalScreenHeight) {
+                this.speed.y = Math.abs(this.speed.y) * -1
             }
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+    public override destroy(options?: DestroyOptions | undefined): void {
+        super.destroy(options)
+    }
+    getHitbox(): Rectangle {
+        return this.hitBox.getBounds().rectangle;
     }
 }

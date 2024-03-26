@@ -42,8 +42,7 @@ export class AniGangnam extends Container implements IUpdatableContainer {
     }
     update(t: Ticker) {
         if (this.aniGangman) {
-            const ds = t.deltaMS / 1000 * 5;
-            this.physGangnam.update(ds)
+            this.physGangnam.update(t)
             this.aniGangman.update(t)
             // if (Keyboard.state.get("ArrowRight")) {
             //     this.physGangnam.speed.x += 100

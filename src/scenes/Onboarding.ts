@@ -14,7 +14,6 @@ export let platfomScaleFactor = .1;
 
 export class Onboarding extends Scene implements IUpdatableContainer {
 
-    private aniGangnam!: AniGangnam;
     private background!: TilingSprite;
 
     constructor() {
@@ -24,13 +23,20 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             await Assets.load('Roboto-Italic.ttf')
             const zombieBundle = await Assets.loadBundle('zombie')
             const bkTexture = await Assets.load("./platform/bk-planet.jpg")
+            const gangnamBundle = await Assets.loadBundle('load-screen')
             this.background = new TilingSprite({ texture: bkTexture, width: finalScreenWidth, height: finalScreenHeight })
 
             this._plats = []
             this.setWorld = new Container();
             this.addChild(this.background)//the wolrd outside the parrallax
+            const aniGangmanSprite = new AnimatedSprite([
+                gangnamBundle.G1,
+                gangnamBundle.G2,
+                gangnamBundle.G3,
+                gangnamBundle.G4], false)
+            aniGangmanSprite.animationSpeed = 0.05;
 
-            this.aniGangnam = new AniGangnam();
+            this.aniGangnam = new AniGangnam(aniGangmanSprite);
             this.aniGangnam.scale.set(aniGangnamScaleFactor)
             this.aniGangnam.interactive = true;
             this.aniGangnam.on('pointerup', this.handlePlayPause, this)
