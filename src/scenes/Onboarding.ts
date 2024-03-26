@@ -17,6 +17,7 @@ export class Onboarding extends Scene implements IUpdatableContainer {
     private animatedZombie!: AnimatedPlayer;
     private world!: Container;
     private aniGangnam!: AniGangnam;
+    background!: TilingSprite;
 
     constructor() {
         super();
@@ -25,11 +26,11 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             await Assets.load('Roboto-Italic.ttf')
             const zombieBundle = await Assets.loadBundle('zombie')
             const bkTexture = await Assets.load("./platform/bk-planet.jpg")
-            const bk = new TilingSprite({ texture: bkTexture, width: finalScreenWidth, height: finalScreenHeight })
+            this.background = new TilingSprite({ texture: bkTexture, width: finalScreenWidth, height: finalScreenHeight })
+            this.addChild(this.background)
 
             this._plats = []
             this.world = new Container();
-            this.world.addChild(bk)
 
             this.aniGangnam = new AniGangnam();
             this.aniGangnam.scale.set(aniGangnamScaleFactor)
@@ -47,17 +48,38 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             this.animatedZombie.scale.set(aniZombieScaleFactor)
             this.animatedZombie.interactive = true;
 
-            const platform1 = new Platform()
-            platform1.scale.set(platfomScaleFactor)
-            platform1.position.set(200, 600)
-            this._plats.push(platform1)
+            let platform = new Platform()
+            platform.scale.set(platfomScaleFactor)
+            platform.position.set(200, 600)
+            this._plats.push(platform)
+            this.world.addChild(platform)
 
-            const platform2 = new Platform()
-            platform2.scale.set(platfomScaleFactor)
-            platform2.position.set(600, 600)
-            this._plats.push(platform2)
+            platform = new Platform()
+            platform.scale.set(platfomScaleFactor)
+            platform.position.set(600, 600)
+            this._plats.push(platform)
+            this.world.addChild(platform)
 
-            this.world.addChild(platform1, platform2, this.aniGangnam, this.animatedZombie)
+            platform = new Platform()
+            platform.scale.set(platfomScaleFactor)
+            platform.position.set(1000, 600)
+            this._plats.push(platform)
+            this.world.addChild(platform)
+
+            platform = new Platform()
+            platform.scale.set(platfomScaleFactor)
+            platform.position.set(1400, 600)
+            this._plats.push(platform)
+            this.world.addChild(platform)
+
+            platform = new Platform()
+            platform.scale.set(platfomScaleFactor)
+            platform.position.set(2000, 600)
+            this._plats.push(platform)
+            this.world.addChild(platform)
+
+
+            this.world.addChild(this.aniGangnam, this.animatedZombie)
 
             this.addChild(this.world)
 
@@ -86,6 +108,7 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             }
 
             this.world.x = -this.animatedZombie.x * this.worldTransform.a + finalScreenWidth / 4
+            this.background.tilePosition.x = this.world.x * .5
         } catch (error) {
             console.log(error)
         }
