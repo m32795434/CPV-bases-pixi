@@ -1,9 +1,9 @@
 import { AnimatedSprite, DestroyOptions, Graphics, ObservablePoint, Rectangle, Ticker } from 'pixi.js';
-import { ZombiePhysContainer } from './ZombiePhysContainer';
-import { Keyboard } from '../utils/Keyboard';
-import { aniZombieScaleFactor } from '../scenes/not-in-use/Onboarding-no-camera';
-import { IHitbox } from '../interfaces/IHitbox';
-import { finalScreenHeight } from '..';
+import { ZombiePhysContainer } from '../ZombiePhysContainer';
+import { Keyboard } from '../../utils/Keyboard';
+import { aniZombieScaleFactor } from '../../scenes/not-in-use/Onboarding-no-camera';
+import { IHitbox } from '../../interfaces/IHitbox';
+import { finalScreenHeight, finalScreenWidth } from '../..';
 
 // TickerScene
 
@@ -28,7 +28,11 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
         const auxO = new Graphics()
             .circle(0, 0, 5 * (1 / aniZombieScaleFactor))
             .fill({ color: 0xff00ff, alpha: 0.3 })
+        // const auxOne = new Graphics()
+        //     .circle((this.aniZombie.x + this.aniZombie.width) * aniZombieScaleFactor / 2, (this.aniZombie.y + this.aniZombie.height) * aniZombieScaleFactor, 2)
+        //     .fill({ color: 0xff00ff, alpha: 0.3 })
 
+        // this.addChild(auxO, auxOne)
         this.hitBox = new Graphics()
             .rect(this.player.x - this.player.width / 2, this.player.y - this.player.height, this.player.width, this.player.height)
             .fill({ color: 0xff00ff, alpha: 0.3 })
@@ -60,14 +64,14 @@ export class AnimatedPlayer extends ZombiePhysContainer implements IHitbox {
             //Escalaba la instancia de AnimatedZombie (padre), pero desde el padre posicionaba al hijo AnimatedZombie.zombiePlayer.x = algo
             //si le reasignaba la posicion al hijo, con su propio width o posición, desde el padre, no aplicaba factor
             // si utilizaba otro valor real como finalScreenWidth aplicaba inversa factor. (porque cuando tengo un scaleFactor<1, "x" e "y" se vuelven enormen, y los valores del mundo global que asigno, los debo volver enormes antes de asignar al hijo que va a estar reducido) commit 1e05196
-            // const zombieRightLimit = (this.x + this.width / 2)
+            const zombieRightLimit = (this.x + this.width / 2)
             const zombieFloor = this.y
-            // if (zombieRightLimit > finalScreenWidth) {
-            //     this.x = finalScreenWidth - this.width / 2
+            if (zombieRightLimit > finalScreenWidth) {
+                this.x = finalScreenWidth - this.width / 2
 
-            // } else if ((this.x - this.width / 2) < 0) {
-            //     this.x = this.width / 2
-            // }
+            } else if ((this.x - this.width / 2) < 0) {
+                this.x = this.width / 2
+            }
             if (zombieFloor > finalScreenHeight) {
                 this.canJump = 0;
                 this.y = finalScreenHeight

@@ -6,7 +6,7 @@ import { Platform } from "../../models/Platform";
 import { finalScreenWidth } from "../..";
 import { AniGangnam } from "../../models/AniGangnam";
 import { Scene } from "../../interfaces/Scene";
-import { AnimatedPlayer } from "../../models/AnimatedPlayer";
+import { AnimatedPlayer } from "../../models/not-in-use/AnimatedPlayer-x-limit";
 
 export let aniGangnamScaleFactor = .2;
 export let aniZombieScaleFactor = .75;
