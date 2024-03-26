@@ -1,13 +1,13 @@
 import { Container } from "pixi.js";
 import { Platform } from "../models/Platform";
 import { AnimatedPlayer } from "../models/AnimatedPlayer";
-import { AniGangnam } from "../models/AniGangnam";
+import { Flubber } from "../models/Flubber";
 
 export class Scene extends Container {
     protected _plats!: Platform[];
     protected _wolrd!: Container;
-    public _player!: AnimatedPlayer;
-    public aniGangnam!: AniGangnam;
+    public player!: AnimatedPlayer;
+    public flubber!: Flubber;
 
     constructor() {
         super()

@@ -1,14 +1,14 @@
 import { AnimatedSprite, Assets, Container, Ticker, TilingSprite } from "pixi.js";
 import { sound } from "@pixi/sound";
 import { Platform } from "../models/Platform";
-import { AniGangnam } from "../models/AniGangnam";
+import { Flubber } from "../models/Flubber";
 import { Scene } from "../interfaces/Scene";
 import { AnimatedPlayer } from '../models/AnimatedPlayer';
 import { IUpdatableContainer } from "../interfaces/IUpdatableContainer";
 import { checkCollision } from "../interfaces/IHitbox";
 import { finalScreenHeight, finalScreenWidth } from "..";
 
-export let aniGangnamScaleFactor = .2;
+export let flubberScaleFactor = .2;
 export let aniZombieScaleFactor = .75;
 export let platfomScaleFactor = .1;
 
@@ -23,23 +23,23 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             await Assets.load('Roboto-Italic.ttf')
             const zombieBundle = await Assets.loadBundle('zombie')
             const bkTexture = await Assets.load("./platform/bk-planet.jpg")
-            const gangnamBundle = await Assets.loadBundle('load-screen')
+            const flubberBundle = await Assets.loadBundle('load-screen')
             this.background = new TilingSprite({ texture: bkTexture, width: finalScreenWidth, height: finalScreenHeight })
 
             this._plats = []
             this.setWorld = new Container();
             this.addChild(this.background)//the wolrd outside the parrallax
-            const aniGangmanSprite = new AnimatedSprite([
-                gangnamBundle.G1,
-                gangnamBundle.G2,
-                gangnamBundle.G3,
-                gangnamBundle.G4], false)
-            aniGangmanSprite.animationSpeed = 0.05;
+            const flubberSprite = new AnimatedSprite([
+                flubberBundle.G1,
+                flubberBundle.G2,
+                flubberBundle.G3,
+                flubberBundle.G4], false)
+            flubberSprite.animationSpeed = 0.05;
 
-            this.aniGangnam = new AniGangnam(aniGangmanSprite);
-            this.aniGangnam.scale.set(aniGangnamScaleFactor)
-            this.aniGangnam.interactive = true;
-            this.aniGangnam.on('pointerup', this.handlePlayPause, this)
+            this.flubber = new Flubber(flubberSprite);
+            this.flubber.scale.set(flubberScaleFactor)
+            this.flubber.interactive = true;
+            this.flubber.on('pointerup', this.handlePlayPause, this)
 
             const zombie1Sprite = new AnimatedSprite([
                 zombieBundle.character_zombie_run0,
@@ -48,9 +48,9 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             ], false)
             zombie1Sprite.animationSpeed = 0.05;
 
-            this._player = new AnimatedPlayer(zombie1Sprite);
-            this._player.scale.set(aniZombieScaleFactor)
-            this._player.interactive = true;
+            this.player = new AnimatedPlayer(zombie1Sprite);
+            this.player.scale.set(aniZombieScaleFactor)
+            this.player.interactive = true;
 
             let platform = new Platform()
             platform.scale.set(platfomScaleFactor)
@@ -83,7 +83,7 @@ export class Onboarding extends Scene implements IUpdatableContainer {
             this.world.addChild(platform)
 
 
-            this.world.addChild(this.aniGangnam, this._player)
+            this.world.addChild(this.flubber, this.player)
 
             this.addChild(this.world)
 
@@ -98,25 +98,25 @@ export class Onboarding extends Scene implements IUpdatableContainer {
         else sound.play('my-sound')
     }
     update(t: Ticker): void {
-        this.aniGangnam.update(t);
-        this._player.update(t)
+        this.flubber.update(t);
+        this.player.update(t)
         try {
             for (const plat of this._plats) {
-                const overlap = checkCollision(this._player, plat)
+                const overlap = checkCollision(this.player, plat)
                 if (overlap != null) {
-                    this._player.separate(overlap, plat.position)
+                    this.player.separate(overlap, plat.position)
                     // console.log("overlap", overlap)
-                    this._player.speed.y = 0
-                    this._player.canJump = 0;
+                    this.player.speed.y = 0
+                    this.player.canJump = 0;
                 }
             }
 
-            this.world.x = -this._player.x * this.worldTransform.a + finalScreenWidth / 4
+            this.world.x = -this.player.x * this.worldTransform.a + finalScreenWidth / 4
             this.background.tilePosition.x = this.world.x * .5
-            this.world.y = -this._player.y * this.worldTransform.d + finalScreenHeight - 150
+            this.world.y = -this.player.y * this.worldTransform.d + finalScreenHeight - 150
 
-            console.log("this.world.x", this.world.x)
-            console.log("this.world.y", this.world.y)
+            // console.log("this.world.x", this.world.x)
+            // console.log("this.world.y", this.world.y)
             // this.background.tilePosition.y = this.world.y * .5 // with this in off, is more real...like seeing to outside in from a window in a train
 
         } catch (error) {

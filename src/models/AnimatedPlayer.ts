@@ -1,7 +1,7 @@
 import { AnimatedSprite, DestroyOptions, Graphics, ObservablePoint, Rectangle, Ticker } from 'pixi.js';
 import { ZombiePhysContainer } from './ZombiePhysContainer';
 import { Keyboard } from '../utils/Keyboard';
-import { aniZombieScaleFactor } from '../scenes/not-in-use/Onboarding-no-camera';
+import { aniZombieScaleFactor } from '../scenes/Onboarding';
 import { IHitbox } from '../interfaces/IHitbox';
 import { finalScreenHeight } from '..';
 
