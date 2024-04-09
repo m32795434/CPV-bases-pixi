@@ -34,6 +34,15 @@ const manifestExample = {
             ],
         },
         {
+            name: "rpg-sounds",
+            assets: [
+                {
+                    alias: "doorClose_3",
+                    src: "../sounds/doorClose_3.ogg"
+                }
+            ]
+        },
+        {
             name: 'game-screen',
             assets: [
                 {

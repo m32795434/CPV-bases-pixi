@@ -1,6 +1,5 @@
 import { Application, Assets, Text } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
-import { sound } from '@pixi/sound';
 import { Keyboard } from './utils/Keyboard';
 import { StonePaperGame } from './before-sound/models/not-in-use/StonePaperGame';
 
@@ -18,8 +17,8 @@ async function init() {
     await Assets.init({ manifest: manifestExample });
 
     // Bundles can be loaded in the background too!
-    Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui']);
-    sound.add('my-sound', './sounds/8-bit-arcade.mp3');
+    Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui', "rpg-sounds"]);
+    // sound.add('my-sound', './sounds/8-bit-arcade.mp3');
 
     makeLoadScreen();
 

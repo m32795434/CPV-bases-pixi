@@ -1,5 +1,6 @@
 import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
 import { Button } from "./Button";
+import { sound } from "@pixi/sound";
 
 export class StonePaperGame extends Container {
     private uiBundle: any;
@@ -9,6 +10,8 @@ export class StonePaperGame extends Container {
     constructor() {
         super();
         (async () => {
+            await Assets.load('doorClose_3');
+
             this.uiBundle = await Assets.loadBundle('ui');
             if (this.uiBundle) {
 
@@ -37,6 +40,16 @@ export class StonePaperGame extends Container {
                     await Assets.load('./UI/green_hand_peace.png'), background.width / 3 * 2 + 10, 10, "scissor")
                 this.handArray.push(stone, paper, scissor)
                 this.addChild(background, stone, paper, scissor)
+                stone.on("pointerdown", () => {
+                    sound.isPlaying() ? sound.pause("doorClose_3") : sound.play("doorClose_3")
+                    // ("doorClose_3")
+                })
+                paper.on("pointerdown", () => {
+                    sound.play("doorClose_3")
+                })
+                scissor.on("pointerdown", () => {
+                    sound.play("doorClose_3")
+                })
 
                 await Assets.load('ComicNeue Bold.ttf');
 
@@ -48,7 +61,11 @@ export class StonePaperGame extends Container {
                 })
                 this.dialog.anchor.set(.5)
                 this.dialog.position.set(background.width / 2, 200)
+                this.dialog.interactive = true;
+                this.dialog.on("pointerdown", () => {
+                    sound.play("doorClose_3")
 
+                })
                 this.addChild(this.dialog)
 
                 document.addEventListener('keydown', this.onkeydown.bind(this))
