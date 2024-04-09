@@ -22,6 +22,6 @@
     },
     // Folder for your code
     "include": [
-        "./src/index.ts"
+        "src/before-sound/index.ts"
     ]
 }

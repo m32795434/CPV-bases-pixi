@@ -1,12 +1,14 @@
-import { Application, Assets, Text } from 'pixi.js';
-import manifestExample from '../static/manifests/manifest-example';
+import { Application, Assets, Sprite } from 'pixi.js';
+import manifestExample from '../../static/manifests/manifest-example';
+import { Onboarding } from './scenes/Onboarding';
 import { sound } from '@pixi/sound';
-import { Keyboard } from './utils/Keyboard';
-import { StonePaperGame } from './before-sound/models/not-in-use/StonePaperGame';
+import { Keyboard } from '../utils/Keyboard';
+import { Scene } from './interfaces/Scene';
 
 
 // Create a new application
 export const app = new Application();
+export let scene: Scene;
 let finalScreenHeight: number, finalScreenWidth: number;
 async function init() {
     // Initialize the application
@@ -45,21 +47,32 @@ async function init() {
 async function makeLoadScreen() {
     // const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
-    await Assets.load('ShortStack Regular.ttf')
-    await Assets.load('Roboto-Italic.ttf')
-    const version: Text = new Text({
-        text: "¡V8🚀!",
-        style: {
-            fontFamily: "ShortStack Regular",
-            fontSize: 40,
-            fill: 0x900000
-        }
-    })
-    version.position.set(finalScreenWidth - version.width - 5, version.height - 10)
-    version.angle = -5;
-    const stonePaperGame = new StonePaperGame();
-    stonePaperGame.position.set(10, 10)
-    app.stage.addChild(version, stonePaperGame)
+    scene = new Onboarding();
+    scene.label = "Onboarding"
+    app.stage.addChild(scene)
+}
+
+export async function makeGameScreen() {
+    // app.stage.removeChildren()
+    const loadScreenAssets = await Assets.loadBundle('game-screen');
+
+    // Create a new Sprite from the resolved loaded texture
+    const goBack = new Sprite(loadScreenAssets.eggHead);
+    goBack.anchor.set(0.5);
+    goBack.x = app.screen.width / 2;
+    goBack.y = app.screen.height / 2;
+    goBack.label = "goBack"
+    app.stage.addChild(goBack);
+
+    goBack.eventMode = 'static';
+    goBack.cursor = 'pointer';
+
+    goBack.on('pointertap', async () => {
+        goBack.destroy();
+        // The user can go back and the files are already downloaded
+        makeLoadScreen();
+    });
+    app.renderer.render(app.stage);
 }
 
 init();
