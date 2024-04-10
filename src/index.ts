@@ -1,4 +1,4 @@
-import { Application, Assets, Text } from 'pixi.js';
+import { Application, Assets, BitmapText, Text } from 'pixi.js';
 import manifestExample from '../static/manifests/manifest-example';
 import { Keyboard } from './utils/Keyboard';
 import { StonePaperGame } from './before-sound/models/not-in-use/StonePaperGame';
@@ -17,7 +17,7 @@ async function init() {
     await Assets.init({ manifest: manifestExample });
 
     // Bundles can be loaded in the background too!
-    Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui', "rpg-sounds"]);
+    Assets.backgroundLoadBundle(['load-screen', 'game-screen', 'ui', "rpg-sounds", "fonts"]);
     // sound.add('my-sound', './sounds/8-bit-arcade.mp3');
 
     makeLoadScreen();
@@ -44,12 +44,14 @@ async function init() {
 async function makeLoadScreen() {
     // const texture1 = await Assets.load("./clampy.png")
     // const clampy = Sprite.from(texture1)
+    await Assets.loadBundle('fonts');
+    // await Assets.load('Reem'); // I can't make this work!Google fonts
     await Assets.load('ShortStack Regular.ttf')
     await Assets.load('Roboto-Italic.ttf')
     const version: Text = new Text({
         text: "¡V8🚀!",
         style: {
-            fontFamily: "ShortStack Regular",
+            fontFamily: "ChaChicle",
             fontSize: 40,
             fill: 0x900000
         }
@@ -59,6 +61,21 @@ async function makeLoadScreen() {
     const stonePaperGame = new StonePaperGame();
     stonePaperGame.position.set(10, 10)
     app.stage.addChild(version, stonePaperGame)
+
+
+    const bitmapFontText = new BitmapText({
+        text: 'bitmap fonts are supported!\nWoo yay!',
+        style: {
+            fontFamily: 'Desyrel',
+            fontSize: 55,
+            align: 'left',
+        },
+    });
+
+    bitmapFontText.x = 50;
+    bitmapFontText.y = 200;
+
+    app.stage.addChild(bitmapFontText);
 }
 
 init();

@@ -1,6 +1,25 @@
 const manifestExample = {
     bundles: [
         {
+            name: "fonts",
+            assets: [
+                {
+                    alias: "kanit",
+                    src: "https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap"
+                }, {
+                    alias: "Reem",
+                    src: "https://fonts.googleapis.com/css2?family=Reem+Kufi+Fun&display=swap"
+                },
+                {
+                    alias: "desyrel",
+                    src: "https://pixijs.com/assets/bitmap-font/desyrel.xml"
+                },
+                {
+                    alias: "ChaChicle",
+                    src: "https://pixijs.com/assets/webfont-loader/ChaChicle.ttf"
+                }
+            ]
+        }, {
             name: 'load-screen',
             assets: [
                 {
