@@ -1,6 +1,6 @@
 import { Assets, Container, NineSliceSprite, Text } from "pixi.js";
 import { Button } from "./Button";
-import { sound } from "@pixi/sound";
+import { filters as soundFilters, sound } from "@pixi/sound";
 
 export class StonePaperGame extends Container {
     private uiBundle: any;
@@ -11,6 +11,9 @@ export class StonePaperGame extends Container {
         super();
         (async () => {
             await Assets.load('doorClose_3');
+            // console.log(AssetSound)
+            // AssetSound.volume = .1
+            // sound.volume("doorClose_3", .1)
 
             this.uiBundle = await Assets.loadBundle('ui');
             if (this.uiBundle) {
@@ -41,14 +44,17 @@ export class StonePaperGame extends Container {
                 this.handArray.push(stone, paper, scissor)
                 this.addChild(background, stone, paper, scissor)
                 stone.on("pointerdown", () => {
-                    sound.isPlaying() ? sound.pause("doorClose_3") : sound.play("doorClose_3")
+                    sound.toggleMuteAll();
                     // ("doorClose_3")
                 })
                 paper.on("pointerdown", () => {
-                    sound.play("doorClose_3")
+                    // sound.volume("doorClose_3", .1)
+                    sound.volume("doorClose_3", 5)
                 })
                 scissor.on("pointerdown", () => {
-                    sound.play("doorClose_3")
+                    sound.volumeAll = .1
+                    sound.volume("doorClose_3", 1)
+                    // sound.play("doorClose_3")
                 })
 
                 await Assets.load('ComicNeue Bold.ttf');
@@ -63,8 +69,7 @@ export class StonePaperGame extends Container {
                 this.dialog.position.set(background.width / 2, 200)
                 this.dialog.interactive = true;
                 this.dialog.on("pointerdown", () => {
-                    sound.play("doorClose_3")
-
+                    sound.play("doorClose_3", { loop: true, singleInstance: true, filters: [new soundFilters.TelephoneFilter()] })
                 })
                 this.addChild(this.dialog)
 
