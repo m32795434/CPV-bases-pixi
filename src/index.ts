@@ -74,6 +74,7 @@ async function makeLoadScreen() {
 
     bitmapFontText.x = 50;
     bitmapFontText.y = 200;
+    // bitmapFontText.tint = 0x000000
 
     app.stage.addChild(bitmapFontText);
 }
